@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अवकाश मोहिम - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण १०</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान १</p>
+            <h1 class="main-heading">अवकाश मोहिम</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण १० • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पहिला मानवी अवकाश प्रवास कोणी केला?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) नील आर्मस्ट्राँग</li><li class="opt correct">ब) युरी गागारिन</li><li class="opt ">क) राकेश शर्मा</li><li class="opt ">ड) कल्पना चावला</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) युरी गागारिन</span></div>
+        <p class="explain">१९६१ साली युरी गागारिन (रशिया) हे पहिले मानव होते ज्यांनी अवकाश प्रवास केला (वोस्तोक-1 यान).</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">भारताचा पहिला उपग्रह कोणता?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) इन्सॅट-1</li><li class="opt correct">ब) आर्यभट</li><li class="opt ">क) चांद्रयान-1</li><li class="opt ">ड) मंगळयान</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) आर्यभट</span></div>
+        <p class="explain">आर्यभट (1975) हा भारताचा पहिला उपग्रह होता; त्याचे नाव गणितज्ञ आर्यभट्ट यांच्यावरून ठेवले.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">चांद्रयान-1 कोणत्या वर्षी प्रक्षेपित झाले?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) 2008</li><li class="opt ">ब) 2014</li><li class="opt ">क) 1969</li><li class="opt ">ड) 1984</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) 2008</span></div>
+        <p class="explain">भारताने 2008 मध्ये चांद्रयान-1 यशस्वी प्रक्षेपित केले; त्याने चंद्रावर पाणी असल्याचे पुरावे मिळवले.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">मंगळ मोहिम (MOM/मंगळयान) कोणत्या वर्षी यशस्वी झाली?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) 2008</li><li class="opt correct">ब) 2014</li><li class="opt ">क) 2019</li><li class="opt ">ड) 1975</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) 2014</span></div>
+        <p class="explain">भारताचे मंगळयान (Mars Orbiter Mission) 2014 मध्ये मंगळाच्या कक्षेत यशस्वी झाले; हे पहिल्याच प्रयत्नात करणारे भारत पहिला देश ठरला.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">भारताची अवकाश संस्था कोणती?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) NASA</li><li class="opt correct">ब) ISRO</li><li class="opt ">क) ESA</li><li class="opt ">ड) Roscosmos</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) ISRO</span></div>
+        <p class="explain">ISRO (Indian Space Research Organisation) ही भारताची अवकाश संस्था आहे; मुख्यालय बेंगळुरू येथे आहे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) युरी गागारिन – पहिला मानवी अवकाश प्रवास (२) नील आर्मस्ट्राँग – चंद्रावर पहिली पावले (३) आर्यभट – भारताचा पहिला उपग्रह (४) चांद्रयान-1 – मंगळ</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) चांद्रयान-1 – मंगळ</span></div>
+        <p class="explain">चांद्रयान-1 हे चंद्रावर पाठवलेले यान आहे; मंगळावर मंगळयान (MOM) गेले.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) PSLV – उपग्रह प्रक्षेपण (२) GSLV – भारी उपग्रह (३) चांद्रयान-2 – शुक्र (४) मंगळयान – मंगळ</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) चांद्रयान-2 – शुक्र</span></div>
+        <p class="explain">चांद्रयान-2 हे चंद्रावर (दक्षिण ध्रुव) प्रक्षेपित झाले; शुक्रावर नव्हे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">अवकाश मोहिम (Space mission)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>पृथ्वीच्या वातावरणाबाहेर अवकाशात उपग्रह, यान व शोधयात्रा पाठवण्याच्या कार्यक्रमास अवकाश मोहिम म्हणतात; उदा. चांद्रयान, मंगळयान.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">उपग्रह (Satellite)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>पृथ्वीभोवती कक्षेत फिरणाऱ्या नैसर्गिक किंवा कृत्रिम वस्तूस उपग्रह म्हणतात; कृत्रिम उपग्रह दळणवळण, हवामान, निरीक्षणासाठी वापरतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">प्रक्षेपण यान (Launch vehicle)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>उपग्रह व यानांना पृथ्वीच्या गुरुत्वाकर्षणातून बाहेर कक्षेत सोडणाऱ्या रॉकेट यंत्रास प्रक्षेपण यान म्हणतात; उदा. PSLV, GSLV.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">ISRO</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-3">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>Indian Space Research Organisation ही भारताची अवकाश संशोधन संस्था आहे; याने चांद्रयान, मंगळयान, नाविक इ. यशस्वी मोहिमा राबवल्या.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारताने कमी खर्चात मंगळयान यशस्वी केले.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>ISRO ने मंगळयान पहिल्याच प्रयत्नात व अत्यंत कमी खर्चात (सु. 450 कोटी रु.) यशस्वी केले; हे जागतिक विक्रम आहे व भारताचे तंत्रज्ञान सिद्ध करते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">उपग्रह पृथ्वीभोवती कक्षेत ठेवण्यासाठी विशिष्ट वेग आवश्यक असतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>उपग्रहाला केंद्राभिमुख बल पुरवणारे गुरुत्वाकर्षण बल असावे लागते; त्यासाठी कक्षीय वेग (√(GM/R)) गाठावा लागतो, नाहीतर उपग्रह परत पडतो किंवा अवकाशात हरवतो.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारताची अवकाश संस्था ________ आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>ISRO</span></div><p class="explain">भारताची अवकाश संस्था ISRO आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पहिला मानवी अवकाश प्रवास ________ यांनी केला.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>युरी गागारिन</span></div><p class="explain">युरी गागारिन यांनी 1961 मध्ये पहिला मानवी अवकाश प्रवास केला.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">भारताचा पहिला उपग्रह ________ होता.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>आर्यभट</span></div><p class="explain">आर्यभट (1975) हा भारताचा पहिला उपग्रह होता.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारताच्या अवकाश मोहिमांचा (चांद्रयान, मंगळयान) आढावा घ्या.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>चांद्रयान-1 (2008): चंद्रावर पाणी शोधले. चांद्रयान-2 (2019): चंद्राच्या दक्षिण ध्रुवाकडे. मंगळयान (2014): मंगळाच्या कक्षेत यश, पहिल्या प्रयत्नात. नाविक (2013): नेव्हिगेशन उपग्रह. यांनी भारताचे अवकाश क्षेत्रातील स्थान मजबूत केले.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">उपग्रह व प्रक्षेपण यान यांचे महत्त्व स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>उपग्रह दळणवळण, हवामान अंदाज, नेव्हिगेशन, संरक्षण व पृथ्वी निरीक्षणासाठी अत्यावश्यक आहेत. प्रक्षेपण यान (PSLV/GSLV) त्यांना कक्षेत सोडतात; स्वदेशी यानामुळे स्वावलंबन व कमी खर्च मिळतो.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">अवकाश संशोधनाचे मानवजातीला फायदे स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>अवकाश संशोधनामुळे: (१) दूरसंचार व इंटरनेट, (२) अचूक हवामान व नैसर्गिक आपत्ती इशारे, (३) GPS/नेव्हिगेशन, (४) पृथ्वीवरील संसाधन व पर्यावरण निरीक्षण, (५) वैज्ञानिक ज्ञान व तंत्रज्ञान प्रगती.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>

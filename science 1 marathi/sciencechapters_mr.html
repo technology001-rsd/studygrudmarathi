@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="mr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विज्ञान व तंत्रज्ञान १ (भौतिकशास्त्र) - मराठी डॅशबोर्ड</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --surface-white: #FFFFFF;
+            --text-dark: #1D2335;
+            --bg-light: #F0F4F8;
+            --text-muted: #64748B;
+            --border-radius-large: 24px;
+            --border-radius-medium: 16px;
+            --border-radius-small: 12px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', 'Segoe UI', 'Nirmala UI', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); min-height: 100vh; }
+        .top-section {
+            background-color: var(--primary-color); color: var(--surface-white);
+            padding: 32px 24px 72px 24px; border-bottom-left-radius: var(--border-radius-large);
+            border-bottom-right-radius: var(--border-radius-large);
+        }
+        .global-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .nav-brand h1 { font-size: 22px; font-weight: 700; }
+        .nav-actions { display: flex; gap: 8px; }
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.15); border: none; color: var(--surface-white);
+            width: 44px; height: 44px; border-radius: var(--border-radius-medium); cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 16px; transition: var(--transition-smooth);
+        }
+        .icon-btn:hover { background: rgba(255, 255, 255, 0.28); }
+        .hero-area p { color: rgba(255, 255, 255, 0.85); font-size: 14px; margin-bottom: 16px; }
+        .search-wrapper { position: relative; width: 100%; max-width: 520px; }
+        .search-input {
+            width: 100%; padding: 14px 16px 14px 46px; background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--border-radius-medium);
+            color: var(--surface-white); font-size: 15px; outline: none;
+        }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.75); }
+        .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.85); }
+        .content-body { padding: 0 24px 40px 24px; margin-top: -40px; }
+        .section-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .section-title { font-size: 18px; font-weight: 700; color: var(--text-dark); }
+        .pill-tag { background-color: var(--primary-color); color: var(--surface-white); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .chapters-container { display: flex; flex-direction: column; gap: 16px; }
+        .chapter-card {
+            background: var(--surface-white); border-radius: var(--border-radius-medium); padding: 16px;
+            border: 1px solid rgba(29, 35, 53, 0.04); cursor: pointer; transition: var(--transition-smooth);
+        }
+        .chapter-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(29, 35, 53, 0.08); }
+        .card-layout { display: flex; align-items: center; }
+        .leading-icon-area {
+            width: 52px; height: 52px; background-color: var(--bg-light); color: var(--primary-color);
+            border-radius: var(--border-radius-small); display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 18px; flex-shrink: 0;
+        }
+        .chapter-card:hover .leading-icon-area { background-color: var(--primary-color); color: var(--surface-white); }
+        .metadata-area { flex: 1; padding-left: 18px; padding-right: 12px; }
+        .chapter-title { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .chapter-subtitle { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .trailing-indicator { color: var(--secondary-color); font-size: 18px; display: flex; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-section">
+            <div class="global-nav">
+                <div class="nav-brand"><h1>विज्ञान व तंत्रज्ञान १</h1></div>
+                <div class="nav-actions">
+                    <button class="icon-btn" onclick="goHome()" title="मुख्यपृष्ठ"><i class="fa-solid fa-house"></i></button>
+                    <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+                    <button class="icon-btn"><i class="fa-regular fa-user"></i></button>
+                </div>
+            </div>
+            <div class="hero-area">
+                <p>इयत्ता दहावी | भौतिकशास्त्र अभ्यासक्रम &mdash; मराठी माध्यम</p>
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-bar" class="search-input" placeholder="भौतिकशास्त्र प्रकरण शोधा...">
+                </div>
+            </div>
+        </header>
+        <main class="content-body">
+            <div class="section-bar">
+                <div class="section-title">पाठ्यपुस्तक प्रकरणे (स्वाध्याय)</div>
+                <div class="pill-tag" id="count-tag">१० प्रकरणे</div>
+            </div>
+            <div class="chapters-container" id="chapters-list"></div>
+        </main>
+    </div>
+    <script>
+        const mrChapters = [{"title":"गुरुत्वाकर्षण","subtitle":"प्रकरण १ • विज्ञान व तंत्रज्ञान १"},{"title":"मूलद्रव्यांचे आवर्ती वर्गीकरण","subtitle":"प्रकरण २ • विज्ञान व तंत्रज्ञान १"},{"title":"रासायनिक अभिक्रिया व समीकरणे","subtitle":"प्रकरण ३ • विज्ञान व तंत्रज्ञान १"},{"title":"विद्युतधारेचे परिणाम","subtitle":"प्रकरण ४ • विज्ञान व तंत्रज्ञान १"},{"title":"उष्णता","subtitle":"प्रकरण ५ • विज्ञान व तंत्रज्ञान १"},{"title":"प्रकाशाचे अपवर्तन","subtitle":"प्रकरण ६ • विज्ञान व तंत्रज्ञान १"},{"title":"भिंगे व त्यांचे उपयोग","subtitle":"प्रकरण ७ • विज्ञान व तंत्रज्ञान १"},{"title":"धातुविज्ञान","subtitle":"प्रकरण ८ • विज्ञान व तंत्रज्ञान १"},{"title":"कार्बनी संयुगे","subtitle":"प्रकरण ९ • विज्ञान व तंत्रज्ञान १"},{"title":"अवकाश मोहिम","subtitle":"प्रकरण १० • विज्ञान व तंत्रज्ञान १"}];
+        function renderList(query = "") {
+            const container = document.getElementById('chapters-list');
+            container.innerHTML = '';
+            let count = 0;
+            mrChapters.forEach((chapter, index) => {
+                if (query && !chapter.title.toLowerCase().includes(query.toLowerCase()) &&
+                    !chapter.subtitle.toLowerCase().includes(query.toLowerCase())) return;
+                count++;
+                const card = document.createElement('div');
+                card.className = 'chapter-card';
+                card.onclick = () => { window.location.href = 'chapter' + (index + 1) + '_mr.html'; };
+                card.innerHTML = `
+                    <div class="card-layout">
+                        <div class="leading-icon-area">${index + 1}</div>
+                        <div class="metadata-area">
+                            <div class="chapter-title">${chapter.title}</div>
+                            <div class="chapter-subtitle">${chapter.subtitle}</div>
+                        </div>
+                        <div class="trailing-indicator"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            const digits = ['०','१','२','३','४','५','६','७','८','९'];
+            const toMr = (n) => String(n).split('').map(d => digits[+d]).join('');
+            document.getElementById('count-tag').innerText = toMr(count) + " प्रकरणे";
+        }
+        function goHome() { window.location.href = '../homepagemarathi/marathihome.html'; }
+        document.getElementById('search-bar').addEventListener('input', (e) => renderList(e.target.value));
+        window.addEventListener('DOMContentLoaded', () => renderList());
+    </script>
+</body>
+</html>

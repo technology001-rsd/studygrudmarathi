@@ -1,0 +1,194 @@
+/* ============================================================
+   auth.css — 10th Marathi: Authentication (Sign Up / Log In)
+   Design System: Light / Flat / Material Design 3 compatible
+   Palette per ui prompt.txt (CSS variables)
+   ============================================================ */
+
+:root {
+  --primary-color: #0052D4;   /* Royal Blue  - header, primary actions, active */
+  --secondary-color: #38B6FF; /* Sky Blue    - secondary actions, accents      */
+  --white: #FFFFFF;           /* Content bg, text on blue                     */
+  --text-color: #1D2335;      /* Dark Navy   - main text / titles             */
+  --muted-color: #5b6478;     /* Derived muted navy for subtitles on white    */
+  --bg-color: #F0F4F8;        /* Light blue-gray app background / disabled     */
+  --border-color: #d9e2ec;    /* Light blue-gray input/card borders           */
+  --danger-color: #e23b54;
+  --success-color: #1f9d6b;
+  --radius-sm: 12px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 2px 8px rgba(29, 35, 53, 0.06);
+  --shadow: 0 8px 24px rgba(0, 82, 212, 0.10);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Noto Naskh Urdu", sans-serif;
+  color: var(--text-color);
+  background: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Branding header (StudyGrid + slogan) ---------- */
+.brand-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.brand-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  /* Glowing neon cyan text gradient */
+  background: linear-gradient(90deg, #00f7ff 0%, #00b3ff 50%, #00f7ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Neon glow (drop-shadow works on gradient-clipped text) */
+  filter:
+    drop-shadow(0 0 6px rgba(0, 247, 255, 0.65))
+    drop-shadow(0 0 16px rgba(0, 179, 255, 0.45));
+}
+.brand-slogan {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  color: var(--muted-color);
+  line-height: 1.4;
+  transition: opacity 0.35s var(--ease);
+}
+.brand-slogan.is-fading { opacity: 0; }
+
+/* ---------- Auth body ---------- */
+.auth-body {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 20px 40px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 26px 24px 30px;
+  animation: cardIn 0.5s var(--ease) both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Tab switcher (pill style) ---------- */
+.tab-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 5px;
+  margin-bottom: 22px;
+}
+.tab-switch__btn {
+  position: relative;
+  z-index: 2;
+  border: 0;
+  background: transparent;
+  color: var(--muted-color);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 0;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: color 0.3s var(--ease);
+}
+.tab-switch__btn.is-active { color: var(--white); }
+.tab-switch__slider {
+  position: absolute;
+  z-index: 1;
+  top: 5px; left: 5px;
+  width: calc(50% - 5px);
+  height: calc(100% - 10px);
+  border-radius: 10px;
+  background: var(--primary-color);
+  transition: transform 0.4s var(--ease);
+}
+.tab-switch__slider.is-right { transform: translateX(100%); }
+
+/* ---------- Forms ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__label {
+  font-size: 12px;
+  color: var(--muted-color);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.field__input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  color: var(--text-color);
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.field__input::placeholder { color: #9aa5b8; }
+.field__input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 82, 212, 0.15);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  border: 0;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  transition: transform 0.2s var(--ease), box-shadow 0.25s var(--ease), filter 0.2s var(--ease);
+}
+.btn--primary {
+  background: var(--primary-color);
+  box-shadow: 0 6px 18px rgba(0, 82, 212, 0.25);
+  width: 100%;
+}
+.btn--primary:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.btn--primary:active { transform: translateY(0); }
+
+/* ---------- Messages ---------- */
+.form-msg {
+  margin: 4px 0 0;
+  min-height: 18px;
+  font-size: 13px;
+  text-align: center;
+  transition: color 0.3s var(--ease);
+}
+.form-msg.is-error { color: var(--danger-color); }
+.form-msg.is-success { color: var(--success-color); }
+
+/* ---------- Utility ---------- */
+.is-hidden { display: none !important; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 420px) {
+  .field-row { flex-direction: column; }
+  .auth-card { padding: 22px 18px 24px; }
+}

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>स्थान-विस्तार - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण २</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">भूगोल (भारत व ब्राझील)</p>
+            <h1 class="main-heading">स्थान-विस्तार</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण २ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारताचा अक्षवृत्तीय विस्तार किती आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) ८°४′ उ. ते ३७°६′ उ.</li><li class="opt ">ब) ५°१६′ उ. ते ३३°४५′ द.</li><li class="opt ">क) २०° उ. ते ४०° उ.</li><li class="opt ">ड) ०° ते ३५° उ.</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) ८°४′ उ. ते ३७°६′ उ.</span></div>
+        <p class="explain">भारत ८°४′ उत्तर ते ३७°६′ उत्तर अक्षवृत्तांदरम्यान आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">ब्राझीलचा अक्षवृत्तीय विस्तार किती आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) ८°४′ उ. ते ३७°६′ उ.</li><li class="opt correct">ब) ५°१६′ उ. ते ३३°४५′ द.</li><li class="opt ">क) १०° उ. ते ३०° उ.</li><li class="opt ">ड) २३°३०′ उ. ते ३५° द.</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) ५°१६′ उ. ते ३३°४५′ द.</span></div>
+        <p class="explain">ब्राझील ५°१६′ उत्तर ते ३३°४५′ दक्षिण अक्षवृत्तांदरम्यान आहे; तो मुख्यतः दक्षिण गोलार्धात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">भारताचे क्षेत्रफळ किती आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) ८५.१ लाख चौ.किमी</li><li class="opt correct">ब) ३२.८ लाख चौ.किमी</li><li class="opt ">क) ५० लाख चौ.किमी</li><li class="opt ">ड) २८ लाख चौ.किमी</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) ३२.८ लाख चौ.किमी</span></div>
+        <p class="explain">भारताचे क्षेत्रफळ ३२.८ लाख चौ.किमी असून जगात तो सातवा मोठा देश आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">ब्राझीलचे क्षेत्रफळ किती आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) ८५.१ लाख चौ.किमी</li><li class="opt ">ब) ३२.८ लाख चौ.किमी</li><li class="opt ">क) ६० लाख चौ.किमी</li><li class="opt ">ड) ४१ लाख चौ.किमी</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) ८५.१ लाख चौ.किमी</span></div>
+        <p class="explain">ब्राझीलचे क्षेत्रफळ ८५.१ लाख चौ.किमी असून जगात तो पाचवा मोठा देश आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">भारताचे प्रमाणवेळ रेखावृत्त कोणते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) ८२°३०′ पूर्व</li><li class="opt ">ब) ४५° पूर्व</li><li class="opt ">क) ६८°७′ पूर्व</li><li class="opt ">ड) ९७°२५′ पूर्व</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) ८२°३०′ पूर्व</span></div>
+        <p class="explain">भारताची प्रमाणवेळ ८२°३०′ पूर्व रेखावृत्तावरून ठरवली जाते.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) भारत – उत्तर गोलार्ध (२) ब्राझील – दक्षिण गोलार्ध (३) भारत – ८२°३०′ पू. रेखावृत्त (४) ब्राझील – ९७°२५′ पू. रेखावृत्त</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) ब्राझील – ९७°२५′ पू. रेखावृत्त</span></div>
+        <p class="explain">ब्राझीलचे प्रमाणवेळ रेखावृत्त ४५° पश्चिम आहे; ९७°२५′ पूर्व हे भारताचे पूर्वेकडील टोक आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) भारत – हिमालय (२) ब्राझील – अमेझोन (३) भारत – द्वीपकल्प (४) ब्राझील – सहारा वाळवंट</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) ब्राझील – सहारा वाळवंट</span></div>
+        <p class="explain">सहारा वाळवंट आफ्रिकेत आहे; ब्राझीलमध्ये अमेझोन वने व ब्राझिलियन पठार आहे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">स्थान (Location)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="answer-text">पृथ्वीवरील एखाद्या ठिकाणाचे अक्षवृत्त व रेखावृत्त यांच्या साहाय्याने केलेले निर्देशन म्हणजे स्थान.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">विस्तार (Extension)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="answer-text">देशाच्या उत्तर-दक्षिण व पूर्व-पश्चिम अंतरास विस्तार म्हणतात. भारताचा उत्तर-दक्षिण सु. ३२१४ किमी व पूर्व-पश्चिम सु. २९३३ किमी आहे.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">प्रमाणवेळ (Standard Time)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="answer-text">देशाच्या मध्यातून जाणाऱ्या रेखावृत्तावर आधारित वेळ. भारताची ८२°३०′ पूर्व वरून, ब्राझीलची ४५° पश्चिम रेखावृत्तावरून.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">अक्षवृत्त व रेखावृत्त</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-3">
+          <div class="qa-inner"><div class="answer-text">अक्षवृत्ते पूर्व-पश्चिम समांतर वर्तुळे (उत्तर/दक्षिण); रेखावृत्ते ध्रुवांना जोडणाऱ्या उत्तर-दक्षिण रेषा (पूर्व/पश्चिम).</div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारत व ब्राझील यांच्या स्थानातील साम्यामुळे दोघांनाही मान्सून पर्जन्य मिळतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="answer-text">दोन्ही देश उष्णकटिबंधीय प्रदेशात असल्याने व विषुववृत्ताजवळ असल्याने तेथे मान्सून वाऱ्यांचा प्रभाव असतो; परिणामी पर्जन्यमान चांगले मिळते.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">ब्राझीलचे क्षेत्रफळ भारतापेक्षा जास्त आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="answer-text">ब्राझीलचे क्षेत्रफळ ८५.१ लाख चौ.किमी असून भारताचे ३२.८ लाख चौ.किमी आहे; म्हणून ब्राझील जगात क्षेत्रफळाने पाचवा व भारत सातवा मोठा देश आहे.</div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारताचे पूर्वेकडील टोक ______ येथे आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>९७°२५′ पूर्व (अंदमानमधील इंदिरा पॉइंट)</span></div><p class="explain">भारताची पूर्व-पश्चिम रेखावृत्तीय मर्यादा ६८°७′ पू. ते ९७°२५′ पू. आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">ब्राझील ______ खंडात आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>दक्षिण अमेरिका</span></div><p class="explain">ब्राझील हा दक्षिण अमेरिका खंडातील सर्वात मोठा देश आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">भारताची राजधानी ______ आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>नवी दिल्ली</span></div><p class="explain">भारताची राजधानी नवी दिल्ली असून ब्राझीलची ब्राझिलिया आहे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारत व ब्राझील यांच्या स्थान व विस्तारातील साम्य व भिन्नता स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="answer-text">साम्य: दोन्ही उष्णकटिबंधीय, किनारपट्टी असलेले, मोठे देश; दोन्हींना मान्सून पर्जन्य मिळतो. भिन्नता: भारत उत्तर गोलार्धात (८°४′–३७°६′ उ.) व ब्राझील मुख्यतः दक्षिण गोलार्धात (५°१६′ उ.–३३°४५′ द.); भारताचे क्षेत्रफळ ३२.८ लाख व ब्राझीलचे ८५.१ लाख चौ.किमी; भारत एशियात, ब्राझील दक्षिण अमेरिकात.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">अक्षवृत्त व रेखावृत्त यांची व्याख्या व उपयोग स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="answer-text">अक्षवृत्ते पृथ्वीभोवती पूर्व-पश्चिम पट्ट्या (विषुववृत्त ०°, ध्रुव ९०°); रेखावृत्ते ध्रुवांना जोडणाऱ्या रेषा (ग्रीनविच ०°). यांच्या छेदनबिंदूने कोणत्याही ठिकाणाचे स्थान (अक्षांश, रेखांश) निश्चित करतात; प्रवास, नकाशा, हवामान अभ्यासासाठी उपयुक्त.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">प्रमाणवेळ का अपनवली जाते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="answer-text">विस्तीर्ण देशात पूर्व-पश्चिम रेखांशफरकामुळे सूर्योदय/वेळ भिन्न असते. एकसमान वेळ (प्रमाणवेळ) अपनवल्यास रेल्वे, दळणवळण, प्रशासन सुरळीत चालते. भारत ८२°३०′ पू. वरून एकच वेळ पाळतो.</div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './geographychapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>

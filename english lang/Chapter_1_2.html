@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.2 An Encounter of a Special Kind - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 1 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">1.2 An Encounter of a Special Kind</h1>
+            <small>Tapan Mukherjee</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">State whether you agree or disagree with the following statements. Justify your choice with proper reasons. (a) The compound where the writer was living, was rich in nature's bounty. (b) Holidays provide us an opportunity to read various magazines and storybooks. (c) The narrator made a mistake by saving the baby langur. (d) Animals cannot convey emotions. (e) The narrator was fifty-five years old when this incident occurred.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Agree – The campus had green grass, colourful flowers, tall trees, squirrels and many birds; it was full of nature's bounty.
+(b) Agree – The narrator says the Puja holidays gave him a chance to become engrossed in children's magazines and storybooks.
+(c) Disagree – Saving the baby langur was a kind and brave act; the mother langur later showed silent gratitude, proving it was the right thing to do.
+(d) Disagree – The mother langur's look of gratitude and her caring behaviour show that animals can convey deep emotions.
+(e) Disagree – The narrator says "Fifty-five years have passed since that day. I am now seventy years old," so he was about fifteen (not fifty-five) at the time.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">Match the phrases in Group A with their meanings in Group B. (a) to be a part and parcel of (b) to be engrossed in (c) to take notice of (d) to figure out (e) to ponder over (f) to be overwhelmed by (g) in a flash (h) to find a solace</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) to be a part and parcel of → (vi) to be an essential or integral part
+(b) to be engrossed in → (v) to be completely occupied in
+(c) to take notice of → (i) to observe and give attention
+(d) to figure out → (ii) to be able to solve a problem
+(e) to ponder over → (iv) to think about seriously
+(f) to be overwhelmed by → (vii) to be affected emotionally in a powerful way
+(g) in a flash → (viii) very quickly
+(h) to find a solace → (iii) to find comfort and peace</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Write in your own words. (a) Why did the narrator ignore the barking of dogs? (b) Why did mother-langur make no effort to grab her baby from the coop?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) The narrator first ignored the dogs because he thought they had cornered a hapless pig, a common commotion. He was also deeply absorbed in his adventure storybook.
+(b) The mother-langur made no effort because she was convinced that no harm was being done to her child; she trusted the narrator after seeing him revive and care for the baby.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">Read the text carefully and arrange the occurrence of happenings in a sequential order. (Given 13 jumbled points. )</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Correct sequence:
+6 – I was engrossed in various magazines and storybooks.
+5 – I became deeply absorbed in the book.
+3 – I heard the disturbance approaching closer.
+10 – I saw something horrible.
+4 – I recalled the terrible custom in the animal clan.
+9 – I gathered a stout stick and then started throwing stones.
+12 – I managed to catch hold of the baby langur's tail.
+1 – I took the baby langur to the backyard.
+7 – I offered him a peeled banana.
+13 – I allowed the mother, access to her baby.
+2 – I cannot forget that look in her eyes.
+11 – I was shown that food was not the only means of communication.
+8 – I still fondly remember that encounter.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">Discuss and write in your own words in 5–6 lines. (a) What would you do, if you find an injured bird while returning from your school? (b) What opinion do you form about the narrator, from the story?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) I would gently pick up the injured bird, place it in a safe box, and take it to a veterinary doctor or an animal shelter. I would give it water and keep it warm until help arrives.
+(b) The narrator is kind, brave and sensitive. He risked the angry male langur to save a helpless baby, cared for its wounds, and felt the mother's gratitude deeply. He respects all living beings.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">Complete and write a paragraph on each of the given activities: Love and affection, Mother–Child Relationship, Injured Animal (provide water/food), How will you help?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Love and affection: Love and affection bind families and friends. We should show them through small kind acts every day.
+Mother–Child Relationship: The story shows a mother langur's deep love; like human mothers, she protects and comforts her child.
+Injured Animal: When we find an injured animal we should provide water/food and medical help instead of harming it.
+How will you help?: I will help by rescuing animals in danger, informing animal helpers, and spreading kindness in my neighbourhood.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">Work in pairs and make as many words as you can, using letters in the word 'ENCOUNTER'. (Three-letter, Four-letter, Five/Six-letter words)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Three-letter: cot, nut, ten, ton, run, net, one, cue, toe, rue, con, cut, urn, ore, nor, rue
+Four-letter: cent, core, cute, note, tone, tour, rent, torn, once, unto, cote
+Five/Six-letter: centre, tenor, tenon, recent, encore, toucan, corner, recount</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Translate the following proverbs in English. (1) जनसेवा हीच खरी ईश्वरसेवा. (2) पेरावे तसे उगवते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(1) Service to people is the true service to God.
+(2) As you sow, so shall you reap. (You reap what you sow.)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">Write a paragraph and give an appropriate title to it using the points: Birds and Animals – Our Best Friends; Loyal, Serve us, Protection and Security, Kindness/honest/compassion, Do not hurt or destroy us, Loneliness Avoided.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Title: Birds and Animals – Our Best Friends
+Birds and animals are loyal companions who serve humans in many ways. Dogs give us protection and security, cows and hens give us food, and birds fill our lives with song. They are honest and full of kindness and compassion. We should never hurt or destroy them; instead we must care for them. Their company removes our loneliness and makes life happier. Truly, they are our best friends.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">10. (A) Complete the remaining blocks determining the types of news. (B) Read the headline and write a news report (Tiger attacks 8-year-old at Rajiv Gandhi National Park) using dateline, leadline, body; use only 3rd person / passive voice. (C) Write dateline, intro and short paragraph for two given headlines.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(A) Types of News: Business, Sports, Politics, Entertainment, Science/Technology, Crime, Weather, Education.
+
+(B) Sample News Report:
+HEADLINE: Tiger attacks 8-year-old at Rajiv Gandhi National Park
+DATELINE: Nagpur, 14th July.
+LEAD: An eight-year-old boy was attacked by a tiger at Rajiv Gandhi National Park on Tuesday morning.
+BODY: The child was immediately rescued by forest guards and was rushed to the hospital. He is said to be out of danger. The park was closed for visitors and an inquiry has been ordered by the forest department.
+
+(C) Sample:
+HEADLINE: Achievers narrate their success stories at career counselling events.
+DATELINE: Mumbai, 12th July. INTRO: Successful achievers shared their journeys at a career counselling event. A short programme was organised for students.
+HEADLINE: India's first ever tourism university to be established by IIHM.
+DATELINE: New Delhi, 10th July. INTRO: A tourism university will be set up by IIHM. It was announced as a first-of-its-kind institution in India.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-10')" aria-expanded="false">
+          <span class="qa-num">11</span>
+          <span class="qa-q">Language Study – 1. Present Participle: Find the 'ing' forms from the story and classify them (used as adjective / used as verb in continuous tense). 2. Spot the error and correct the sentences. 3. Rewrite the sentences in the given tenses.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-10">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">1. Present Participle examples from the story:
+As adjective: twinkling eyes, sleeping child, barking dogs, cawing crow, soaring kite, hovering birds.
+As verb (continuous): was oozing, was engrossed, were broken, was absorbed, was convinced, was overwhelmed.
+
+2. Spot the error:
+(a) My grandparents lay down for an afternoon nap. (lay → laid)
+(b) A stranger was knocking at our door. (were → was)
+(c) My sister and I share a study room. (shares → share)
+(d) One of my friends is leaving school. (friend → friends)
+(e) A flock of birds was flying overhead. (were → was)
+
+3. Rewrite:
+(a) I had taken the baby langur to our backyard. (Past Perfect)
+(b) She is simply sitting there quietly. (Present Continuous)
+(c) The mother langur looks straight into my eyes. (Simple Present)
+(d) She will survey the area for the vicious male langur. (Simple Future)</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

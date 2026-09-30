@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.4 Let's March! - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 3 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">3.4 Let's March!</h1>
+            <small>Kailash Satyarthi (Nobel Acceptance Speech)</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">Name the following: (a) The persons to whom Kailash Satyarthi gives the highest credit of his honour. (b) The greatest personalities from the land of Buddha. (c) The 'Daughters' of Kailash Satyarthi mentioned in his speech. (d) The foreign activists of equal rights.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Kaalu Kumar, Dhoom Das and Adarsh Kishore from India, and Iqbal Masih from Pakistan — who made the supreme sacrifice for protecting the freedom and dignity of children.
+(b) Lord Buddha, Guru Nanak and Mahatma Gandhi.
+(c) Malala (his daughter Malala), Kayanat, Shazia, and the daughters from Africa and all over the world.
+(d) Mahatma Gandhi, Nelson Mandela, Martin Luther King Jr.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">Mention the social issues highlighted by Kailash Satyarthi in his speech.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Social issues:
+(a) Child labour
+(b) Child slavery / trafficking
+(c) Child marriage
+(d) Lack of education / out-of-school children
+(e) Poverty and malnutrition
+(f) Child mortality
+(g) Violence against children
+(h) Fear and intolerance in society</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Complete the chart: The aim in life of Kailash Satyarthi is that every child is free…</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">The aim in life of Kailash Satyarthi is that every child is free…
+• to be a child
+• to grow and develop
+• to eat, sleep and see daylight
+• to laugh and cry
+• to play and learn
+• to go to school
+• to dream</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">Complete the web-chart: An appeal of Kailash Satyarthi</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">An appeal of Kailash Satyarthi:
+• Let us march from exploitation to education.
+• Let us march from poverty to shared prosperity.
+• Let us march from slavery to liberty.
+• Let us march from violence to peace.
+• Let us march from ignorance to awakening.
+• Let us march from darkness to light.
+• Let us march from mortality to divinity.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">Find out the describing words used for the following nouns: (a) sacrifice (b) faces (c) militia (d) challenge (e) globalisation (f) agencies</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) sacrifice → supreme sacrifice
+(b) faces → smiling faces, beautiful faces, frightened faces
+(c) militia → extremist militia
+(d) challenge → biggest challenge
+(e) globalisation → rapid globalisation
+(f) agencies → intergovernmental agencies</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">Choose the correct option: (a) divinity: (i) goodness (ii) godliness (iii) god-fearing (b) extremist: (i) militant (ii) robber (iii) spy (c) culminate: (i) destroy (ii) succeed (iii) rise to a peak</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) divinity → (ii) godliness
+(b) extremist → (i) militant
+(c) culminate → (iii) rise to a peak</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">(A) What will you do in the following situations? (a) If you see a child working in a restaurant (b) If you find a child working at a construction site (c) If you find a child working at a brickwork site (d) If you come across a beggar child (B) Write any 2 efforts to enrol deprived/out-of-school children into a school.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(A)
+(a) I will talk to the restaurant owner politely and inform him about child labour laws. I will also report it to the child helpline (1098).
+(b) I will approach the site supervisor and explain that child labour is illegal. I will contact local authorities or NGOs.
+(c) I will inform the local police and child welfare committee. I will try to convince the parents to send the child to school.
+(d) I will give them food and water. I will approach an NGO that works for street children and try to get them admitted to a shelter home or school.
+
+(B)
+(a) I will persuade parents of such children to send them to school.
+(b) I will help the child get enrolled in a government school that provides free education and midday meals.
+(c) I will contact an NGO like Bachpan Bachao Andolan or CRY for support.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Today, it is time for every child to have a right to: education, _____, _____, _____, _____, _____, _____, _____.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Today, it is time for every child to have a right to:
+• life
+• freedom
+• health
+• education
+• safety
+• dignity
+• equality
+• peace</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">Make a list of Indian Nobel Laureates.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Indian Nobel Laureates:
+(a) Rabindranath Tagore (Literature, 1913)
+(b) C.V. Raman (Physics, 1930)
+(c) Mother Teresa (Peace, 1979)
+(d) Amartya Sen (Economics, 1998)
+(e) Kailash Satyarthi (Peace, 2014)
+(f) Abhijit Banerjee (Economics, 2019)
+Other notable: Har Gobind Khorana (Medicine, 1968), Subrahmanyan Chandrasekhar (Physics, 1983)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">Make a list of prestigious awards in India.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Civilian Awards:
+(a) Bharat Ratna
+(b) Padma Vibhushan
+(c) Padma Bhushan
+(d) Padma Shri
+(e) National Bravery Awards
+
+Highest Gallantry Awards:
+(a) Param Vir Chakra
+(b) Ashok Chakra
+(c) Maha Vir Chakra
+(d) Kirti Chakra
+(e) Shaurya Chakra</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-10')" aria-expanded="false">
+          <span class="qa-num">11</span>
+          <span class="qa-q">Make meaningful sentences using: (a) in the pursuit of (b) to be afraid of (c) to give up</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-10">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) In the pursuit of: The scientist worked hard in the pursuit of knowledge.
+(b) To be afraid of: We should not be afraid of failure; it is a part of learning.
+(c) To give up: Never give up on your dreams, no matter how difficult the path.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-11')" aria-expanded="false">
+          <span class="qa-num">12</span>
+          <span class="qa-q">Write minimum 5 hidden words of more than 4 letters from 'intergovernmental'.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-11">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Hidden words from 'intergovernmental':
+1. government
+2. mental
+3. mother
+4. internal
+5. great
+6. mentor
+7. metal
+8. termite</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-12')" aria-expanded="false">
+          <span class="qa-num">13</span>
+          <span class="qa-q">Draft a welcome speech for Malala to preside over Children's Day celebration.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-12">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Good morning everyone,
+
+Respected Chief Guest Malala Yousafzai, honourable teachers, and my dear friends.
+
+Today, we are truly honoured to have Malala Yousafzai with us on this special occasion of Children's Day. Malala is a global symbol of courage, education and peace. At a very young age, she stood up for girls' education in Pakistan and survived a brutal attack. She went on to become the youngest Nobel Peace Prize laureate.
+
+Her message — "One child, one teacher, one book, one pen can change the world" — inspires millions. We welcome her with open hearts and hope her words will inspire us to value education and stand up for our rights.
+
+Thank you, Malala, for being here. We are blessed to have you among us.
+
+Welcome!</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-13')" aria-expanded="false">
+          <span class="qa-num">14</span>
+          <span class="qa-q">Use the same words as noun and verb: March, honour, credit, stitch.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-13">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">March:
+• Noun: The soldiers began their long march at dawn.
+• Verb: We must march forward towards our goals.
+
+Honour:
+• Noun: It is a great honour to receive this award.
+• Verb: We should honour our parents and teachers.
+
+Credit:
+• Noun: He deserves full credit for his hard work.
+• Verb: Please credit the amount to my account.
+
+Stitch:
+• Noun: The doctor put a stitch on the wound.
+• Verb: My grandmother can stitch beautiful clothes.</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

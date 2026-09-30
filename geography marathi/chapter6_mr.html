@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लोकसंख्या - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण ६</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">भूगोल (लोकसंख्या)</p>
+            <h1 class="main-heading">लोकसंख्या</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण ६ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">२०११ जनगणनेनुसार भारताची लोकसंख्या किती?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) १०२ कोटी</li><li class="opt correct">ब) १२१ कोटी</li><li class="opt ">क) १३० कोटी</li><li class="opt ">ड) ९० कोटी</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) १२१ कोटी</span></div>
+        <p class="explain">२०११ जनगणनेनुसार भारताची लोकसंख्या १२१.०६ कोटी होती.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">भारताची लोकसंख्या घनता (२०११)?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) ३८२ व्यक्ती/चौ.किमी</li><li class="opt ">ब) २००</li><li class="opt ">क) ५००</li><li class="opt ">ड) १००</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) ३८२ व्यक्ती/चौ.किमी</span></div>
+        <p class="explain">२०११ मध्ये लोकसंख्या घनता ३८२ व्यक्ती/चौ.किमी होती.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">लिंग गुणोत्तर (२०११)?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) ९२९ स्त्रिया/१००० पुरुष</li><li class="opt ">ब) १०००</li><li class="opt ">क) ८५०</li><li class="opt ">ड) ९८०</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) ९२९ स्त्रिया/१००० पुरुष</span></div>
+        <p class="explain">२०११ मध्ये लिंग गुणोत्तर ९२९ स्त्रिया प्रति १००० पुरुष.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">साक्षरता दर (२०११)?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) ६५%</li><li class="opt correct">ब) ७४.०४%</li><li class="opt ">क) ८५%</li><li class="opt ">ड) ५०%</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) ७४.०४%</span></div>
+        <p class="explain">२०११ मध्ये साक्षरता दर ७४.०४% (पुरुष ८२.१४%, स्त्री ६५.४६%).</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">भारतात सर्वाधिक लोकसंख्या असलेले राज्य?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) महाराष्ट्र</li><li class="opt ">ब) बिहार</li><li class="opt correct">क) उत्तर प्रदेश</li><li class="opt ">ड) पश्चिम बंगाल</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>क) उत्तर प्रदेश</span></div>
+        <p class="explain">उत्तर प्रदेश हे सर्वाधिक लोकसंख्या असलेले राज्य.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) जनगणना – २०११ (२) लिंग गुणोत्तर – ९२९ (३) घनता – ३८२ (४) साक्षरता – ६५%</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) साक्षरता – ६५%</span></div>
+        <p class="explain">२०११ साली साक्षरता ७४.०४% होती; ६५% नव्हे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) उत्तर प्रदेश – सर्वाधिक लोकसंख्या (२) केरळ – सर्वाधिक साक्षर (३) बिहार – सर्वाधिक लिंग गुणोत्तर (४) पश्चिम बंगाल – चौथे स्थान</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) बिहार – सर्वाधिक लिंग गुणोत्तर</span></div>
+        <p class="explain">बिहारमध्ये लिंग गुणोत्तर सर्वात कमी (९१८); केरळमध्ये सर्वाधिक (१०८४).</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">लोकसंख्या घनता</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="answer-text">प्रति चौरस किलोमीटर लोकसंख्या. भारत २०११ मध्ये ३८२ व्यक्ती/चौ.किमी. पश्चिम बंगाल, बिहारमध्ये जास्त, अरुणाचलमध्ये कमी.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">लिंग गुणोत्तर</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="answer-text">प्रति १००० पुरुषांमागे स्त्रियांची संख्या. २०११ मध्ये ९२९. केरळमध्ये सर्वाधिक (१०८४), हरियाणात कमी.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">साक्षरता</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="answer-text">वाचू-लिहू शकणाऱ्यांचे प्रमाण. २०११ मध्ये ७४.०४% (पुरुष ८२.१४%, स्त्री ६५.४६%). केरळ सर्वाधिक साक्षर.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">जनगणना</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-3">
+          <div class="qa-inner"><div class="answer-text">देशातील लोकसंख्येची मोजणी. भारतात दर १० वर्षांनी होते. २०११ ही १५वी जनगणना; "आमारी संख्या, आमचे भविष्य".</div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">भारतात लोकसंख्या घनता जास्त आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="answer-text">सुपीक मैदाने, नद्यांच्या खोऱ्यांत सिंचन व शेती सोयी, उद्योग व नोकरीसाठी शहरे यामुळे लोकवस्ती घनदाट.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">लिंग गुणोत्तर कमी होणे चिंतेचे आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="answer-text">मुलींचा भ्रूणहत्या, कन्याभ्रूण चाचणी, सामाजिक भेदभावामुळे स्त्रियांचे प्रमाण कमी; लोकसंख्या संतुलनासाठी हे वाईट.</div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">२०११ मध्ये भारताची लोकसंख्या सुमारे ______ कोटी होती.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>१२१</span></div><p class="explain">२०११ जनगणनेनुसार १२१.०६ कोटी.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">भारतात सर्वाधिक साक्षर राज्य ______ आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>केरळ</span></div><p class="explain">केरळचा साक्षरता दर सर्वाधिक (९३%+).</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">लोकसंख्या वाढीचा दर ______ म्हणून ओळखला जातो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>जनसंख्या विस्फोट</span></div><p class="explain">१९५१-१९८१ दरम्यान जन्मदर जास्त व मृत्यूदर कमी झाल्याने वेगवान वाढ ("जनसंख्या विस्फोट").</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">लोकसंख्या वितरणावर परिणाम करणारे घटक स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="answer-text">घटक: (१) भौगोलिक (सपाट जमीन, पाणी, हवामान), (२) आर्थिक (शेती, उद्योग, रोजगार), (३) सामाजिक (शिक्षण, आरोग्य), (४) ऐतिहासिक. सुपीक मैदाने व शहरांत घनता जास्त.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">लोकसंख्या रचना म्हणजे काय? स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="answer-text">लोकसंख्येचे वय, लिंग, साक्षरता, व्यावसायिक, ग्रामीण/नागरी अशा गटांत विभाजन म्हणजे रचना. यावरून विकास व नियोजन समजते.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">लोकसंख्या वाढीचे परिणाम व नियंत्रण उपाय सांगा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="answer-text">परिणाम: रोजगार, शिक्षण, आरोग्य, संसाधनांवर ताण. उपाय: कुटुंब नियोजन, साक्षरता (विशेषतः स्त्री), आरोग्य सुविधा, जनजागृती.</div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './geographychapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>

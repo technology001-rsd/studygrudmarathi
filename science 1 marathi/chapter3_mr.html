@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रासायनिक अभिक्रिया व समीकरणे - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण ३</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान १</p>
+            <h1 class="main-heading">रासायनिक अभिक्रिया व समीकरणे</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण ३ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">वस्तुमानाचा नित्यतेचा नियम कोणी मांडला?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) डाल्टन</li><li class="opt correct">ब) लॅव्हॉइझिये</li><li class="opt ">क) मेंडेलीव्ह</li><li class="opt ">ड) बोहर</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) लॅव्हॉइझिये</span></div>
+        <p class="explain">लॅव्हॉइझिये यांनी वस्तुमानाचा नित्यतेचा नियम मांडला: "रासायनिक अभिक्रियेत एकूण वस्तुमान बदलत नाही."</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">2Mg + O₂ → 2MgO ही कोणत्या प्रकारची अभिक्रिया आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) संयोग</li><li class="opt ">ब) वियोजन</li><li class="opt ">क) विस्थापन</li><li class="opt ">ड) दुहेरी विस्थापन</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) संयोग</span></div>
+        <p class="explain">दोन किंवा अधिक द्रव्ये एकत्र येऊन एक नवीन द्रव्य तयार होते तिला संयोग अभिक्रिया म्हणतात. Mg व O₂ मिळून MgO तयार होतो.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Fe + CuSO₄ → FeSO₄ + Cu ही कोणती अभिक्रिया आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) संयोग</li><li class="opt ">ब) वियोजन</li><li class="opt correct">क) विस्थापन</li><li class="opt ">ड) दुहेरी विस्थापन</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>क) विस्थापन</span></div>
+        <p class="explain">ज्या अभिक्रियेत अधिक अभिक्रियाशील धातू कमी अभिक्रियाशील धातूला त्याच्या क्षारातून विस्थापित करतो तिला विस्थापन अभिक्रिया म्हणतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">अभिक्रियेत उष्णता निर्माण होत असेल तर ती कोणती अभिक्रिया?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) उष्माग्राही</li><li class="opt correct">ब) उष्मादायी</li><li class="opt ">क) वियोजन</li><li class="opt ">ड) प्रेरण</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) उष्मादायी</span></div>
+        <p class="explain">उष्मादायी (exothermic) अभिक्रियेत उष्णता निर्माण होते; उष्माग्राही (endothermic) अभिक्रियेत उष्णता शोषली जाते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">रासायनिक समीकरण संतुलित करण्यासाठी काय वापरतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) अणुक्रमांक</li><li class="opt correct">ब) सहगुणक (coefficients)</li><li class="opt ">क) अणुवस्तुमान</li><li class="opt ">ड) समूह</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) सहगुणक (coefficients)</span></div>
+        <p class="explain">समीकरणातील घटकांसमोर योग्य सहगुणक (संख्या) लावून अभिक्रियाकांचे व उत्पादकांचे वस्तुमान समान करतात, त्यास संतुलन म्हणतात.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) संयोग – 2Mg+O₂→2MgO (२) वियोजन – CaCO₃→CaO+CO₂ (३) विस्थापन – AgNO₃+NaCl→AgCl+NaNO₃ (४) दुहेरी विस्थापन – Fe+CuSO₄→FeSO₄+Cu</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) विस्थापन – AgNO₃+NaCl→AgCl+NaNO₃</span></div>
+        <p class="explain">AgNO₃ + NaCl → AgCl + NaNO₃ ही दुहेरी विस्थापन अभिक्रिया आहे, साधी विस्थापन नव्हे; Fe + CuSO₄ → FeSO₄ + Cu ही साधी विस्थापन आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) लॅव्हॉइझिये – वस्तुमान नित्यता (२) डाल्टन – अणुवाद (३) प्राउस्ट – निश्चित प्रमाण नियम (४) रदरफोर्ड – आवर्त सारणी</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) रदरफोर्ड – आवर्त सारणी</span></div>
+        <p class="explain">रदरफोर्ड यांनी अणुरचनेचा (न्यूक्लियस) शोध लावला; आवर्त सारणी मेंडेलीव्ह व मोसेले यांची कामगिरी आहे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">वस्तुमानाचा नित्यतेचा नियम</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>रासायनिक अभिक्रियेत अभिक्रियाकांचे एकूण वस्तुमान हे उत्पादकांच्या एकूण वस्तुमानाइतकेच राहते; म्हणजे वस्तुमान निर्माण किंवा नष्ट होत नाही.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">संयोग अभिक्रिया</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>दोन किंवा अधिक साधी द्रव्ये एकत्र येऊन एक नवीन संयुग तयार करतात तेव्हा संयोग अभिक्रिया होते; उदा. 2H₂ + O₂ → 2H₂O.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">वियोजन अभिक्रिया</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>एका संयुगाचे उष्णता, विद्युतधारा किंवा प्रकाशाच्या साहाय्याने दोन किंवा अधिक साध्या द्रव्यांत विघटन होते तेव्हा वियोजन अभिक्रिया होते; उदा. 2H₂O → 2H₂ + O₂.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">उष्मादायी अभिक्रिया</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-3">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>ज्या रासायनिक अभिक्रियेत उष्णता निर्माण होते (बाहेर पडते) तिला उष्मादायी अभिक्रिया म्हणतात; उदा. विजेच्या बल्बमधील टंगस्टनचे ज्वलन.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">रासायनिक अभिक्रियेत एकूण वस्तुमान बदलत नाही.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>अणू नष्ट होत नसून फक्त पुनर्व्यवस्थित होतात; अभिक्रियाकांतील अणूंची संख्या व वस्तुमान उत्पादकांतही तेवढेच राहते, म्हणून वस्तुमान स्थिर राहते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">वियोजन अभिक्रियेस उष्णता द्यावी लागते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>संयुगातील बंध तोडण्यासाठी ऊर्जा (उष्णता) लागते, म्हणून वियोजन सहसा उष्माग्राही असते.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">वस्तुमानाचा नित्यतेचा नियम ________ यांनी मांडला.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>लॅव्हॉइझिये</span></div><p class="explain">लॅव्हॉइझिये यांनी वस्तुमानाचा नित्यतेचा नियम मांडला.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">2H₂ + O₂ → 2H₂O ही ________ अभिक्रिया आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>संयोग</span></div><p class="explain">हायड्रोजन व ऑक्सिजन मिळून पाणी तयार होते म्हणून ती संयोग अभिक्रिया आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">अभिक्रियेत उष्णता निर्माण होत असेल तर ती ________ अभिक्रिया म्हणतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>उष्मादायी</span></div><p class="explain">उष्णता निर्माण करणाऱ्या अभिक्रियेस उष्मादायी (exothermic) म्हणतात.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">रासायनिक समीकरण संतुलित करणे का आवश्यक आहे? स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>वस्तुमानाच्या नित्यतेच्या नियमानुसार अभिक्रियेत वस्तुमान बदलत नाही, म्हणून समीकरण संतुलित करणे आवश्यक आहे. संतुलनामुळे अभिक्रियाक व उत्पादक यांच्यातील अणूंची संख्या समान होते व अभिक्रियेचे योग्य प्रमाण समजते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">संयोग, वियोजन, विस्थापन व दुहेरी विस्थापन अभिक्रियांची उदाहरणे द्या.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>संयोग: 2Mg + O₂ → 2MgO. वियोजन: CaCO₃ → CaO + CO₂. विस्थापन: Fe + CuSO₄ → FeSO₄ + Cu. दुहेरी विस्थापन: AgNO₃ + NaCl → AgCl + NaNO₃. प्रत्येकात घटकांची अदलाबदल व नवीन द्रव्यनिर्मिती होते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">वस्तुमानाचा नित्यतेचा नियम सविस्तर स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>लॅव्हॉइझिये यांच्या नियमानुसार "रासायनिक अभिक्रियेत पदार्थांचे वस्तुमान निर्माण किंवा नष्ट होत नाही; अभिक्रियाकांचे वस्तुमान = उत्पादकांचे वस्तुमान." अणू फक्त पुनर्व्यवस्थित होतात, नष्ट होत नाहीत, म्हणून वस्तुमान स्थिर राहते.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>
