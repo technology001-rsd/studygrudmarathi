@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मूलद्रव्यांचे आवर्ती वर्गीकरण - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण २</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान १</p>
+            <h1 class="main-heading">मूलद्रव्यांचे आवर्ती वर्गीकरण</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण २ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">आधुनिक आवर्त सारणीतील आडव्या रांगांना काय म्हणतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) समूह</li><li class="opt correct">ब) आवर्त</li><li class="opt ">क) गण</li><li class="opt ">ड) वर्ग</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) आवर्त</span></div>
+        <p class="explain">आधुनिक आवर्त सारणीत आडव्या रांगांना "आवर्त" (Period) व उभ्या स्तंभांना "समूह" (Group) म्हणतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">मूलद्रव्यांची ओळख व गुणधर्म कशावर अवलंबून असतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) अणुवस्तुमान</li><li class="opt ">ब) बाह्यकक्षेतील इलेक्ट्रॉन्स</li><li class="opt ">क) न्यूट्रॉन्सची संख्या</li><li class="opt correct">ड) अणुक्रमांक</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ड) अणुक्रमांक</span></div>
+        <p class="explain">आधुनिक आवर्त सारणी अणुक्रमांकावर आधारित आहे; अणुक्रमांक वाढत जाण्यासोबत गुणधर्मांची पुनरावृत्ती होते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">अल्क धातू कोणत्या समूहात असतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) समूह १ (IA)</li><li class="opt ">ब) समूह २ (IIA)</li><li class="opt ">क) समूह १७ (VIIA)</li><li class="opt ">ड) समूह १८ (VIIIA)</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) समूह १ (IA)</span></div>
+        <p class="explain">अल्क धातू (Li, Na, K, Rb, Cs, Fr) समूह १ (IA) मध्ये असतात व ते अत्यंत अभिक्रियाशील असतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">उत्कृष्ट वायू कोणत्या समूहात असतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) समूह १</li><li class="opt ">ब) समूह २</li><li class="opt ">क) समूह १७</li><li class="opt correct">ड) समूह १८</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ड) समूह १८</span></div>
+        <p class="explain">उत्कृष्ट वायू (He, Ne, Ar, Kr, Xe, Rn) समूह १८ मध्ये असतात; त्यांची बाह्यकक्षा पूर्ण भरलेली असल्याने ते अभिक्रियाहीन असतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">मेंडेलीव्हची आवर्त सारणी कशावर आधारित होती?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) अणुवस्तुमान</li><li class="opt ">ब) अणुक्रमांक</li><li class="opt ">क) वस्तुमानांक</li><li class="opt ">ड) इलेक्ट्रॉन संरूपण</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) अणुवस्तुमान</span></div>
+        <p class="explain">मेंडेलीव्हने अणुवस्तुमानाच्या वाढत्या क्रमाने मूलद्रव्ये मांडली; नंतर मोसेले यांनी अणुक्रमांकावर आधारित आधुनिक सारणी दिली.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) मेंडेलीव्ह – अणुवस्तुमान (२) मोसेले – अणुक्रमांक (३) आवर्त – उभे स्तंभ (४) समूह – आडव्या रांगा</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) समूह – आडव्या रांगा</span></div>
+        <p class="explain">समूह हे उभे स्तंभ असतात व आवर्त हे आडव्या रांगा असतात; म्हणून ही जोडी चुकीची आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) Na – धातू (२) Cl – अधातू (३) He – अल्क धातू (४) Ne – उत्कृष्ट वायू</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) He – अल्क धातू</span></div>
+        <p class="explain">He (हीलियम) हा उत्कृष्ट वायू आहे, अल्क धातू नव्हे; अल्क धातू समूह १ मधील Na, K इत्यादी आहेत.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">आवर्त सारणी (Periodic table)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>मूलद्रव्यांची त्यांच्या अणुक्रमांकाच्या वाढत्या क्रमाने अशी मांडणी करणे की ज्यात समान गुणधर्माची मूलद्रव्ये एकाच उभ्या स्तंभात (समूहात) येतात, तिला आवर्त सारणी म्हणतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">समूह (Group)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>आवर्त सारणीतील उभ्या स्तंभास समूह म्हणतात. एकाच समूहातील मूलद्रव्यांचे बाह्यकक्षेतील इलेक्ट्रॉन्स सारखे असल्याने गुणधर्म सारखे असतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">उत्कृष्ट वायू (Noble gases)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>समूह १८ मधील He, Ne, Ar, Kr, Xe, Rn या वायूंना उत्कृष्ट वायू म्हणतात. त्यांची बाह्यकक्षा पूर्ण भरलेली असते म्हणून ते अभिक्रियाहीन असतात.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">अणुक्रमांक वाढत जाणाऱ्या मूलद्रव्यांची मांडणी केल्यास गुणधर्मांची पुनरावृत्ती होते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>अणुक्रमांक वाढल्यास बाह्यकक्षेतील इलेक्ट्रॉन्सची संख्या व संरूपण नियमितपणे पुनःपुन्हा सारखे होते, म्हणून गुणधर्मांची पुनरावृत्ती (आवर्तिता) दिसते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">उत्कृष्ट वायूंची अभिक्रियाशीलता शून्य असते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>उत्कृष्ट वायूंची बाह्य इलेक्ट्रॉन कक्षा पूर्ण भरलेली (ऑक्टेट) असते; त्यामुळे ते इतर मूलद्रव्यांबरोबर सहज बंध तयार करीत नाहीत.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">आधुनिक आवर्त सारणीत एकूण ________ मूलद्रव्ये आहेत.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>११८</span></div><p class="explain">सध्याच्या आधुनिक आवर्त सारणीत ११८ मूलद्रव्ये मांडली आहेत, ज्यात ७ आवर्त व १८ समूह आहेत.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">अल्क धातू ________ समूहात असतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>१ (IA)</span></div><p class="explain">अल्क धातू समूह १ (IA) मध्ये असतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">बाह्यकक्षेतील इलेक्ट्रॉन्सना ________ म्हणतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>संयुजा इलेक्ट्रॉन्स</span></div><p class="explain">बाह्यकक्षेतील इलेक्ट्रॉन्सना संयुजा इलेक्ट्रॉन्स म्हणतात; तेच रासायनिक बंधनासाठी जबाबदार असतात.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">मेंडेलीव्ह व मोसेले यांच्या आवर्त सारणीतील फरक स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>मेंडेलीव्हने मूलद्रव्ये अणुवस्तुमानाच्या वाढत्या क्रमाने मांडली व गुणधर्मांची आवर्तिता शोधली; पण काही जागी चुकीची मांडणी व रिक्त जागा राहिल्या. मोसेले यांनी अणुक्रमांक हा मूलभूत गुणधर्म असल्याचे सिद्ध केले व अणुक्रमांकावर आधारित आधुनिक आवर्त सारणी दिली, जी अधिक अचूक आहे.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">आधुनिक आवर्त सारणीची रचना व महत्त्व स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>आधुनिक आवर्त सारणीत ७ आवर्त (आडव्या रांगा) व १८ समूह (उभे स्तंभ) असतात. डावीकडून उजवीकडे जाताना धातू → उपधातू → अधातू असा क्रम असतो. ही सारणी मूलद्रव्यांचे गुणधर्म, संयुजा, अणूचा आकार, अभिक्रियाशीलता समजून घेण्यास मदत करते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">अल्क धातू व उत्कृष्ट वायूंच्या गुणधर्मांतील फरक स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>अल्क धातू (समूह १) हे चमकदार, मृदू, वीज व उष्णता वाहक, अत्यंत अभिक्रियाशील धातू असतात व पाण्याबरोबर तीव्र अभिक्रिया करतात. उत्कृष्ट वायू (समूह १८) वायू अवस्थेत असतात, अभिक्रियाहीन असतात व त्यांची बाह्यकक्षा पूर्ण भरलेली असते.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>

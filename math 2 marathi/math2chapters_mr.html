@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गणित भाग २ - मराठी डॅशबोर्ड</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+        .app-header {
+            background-color: var(--primary-color);
+            height: 30vh;
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { margin-bottom: 24px; }
+        .nav-container { display: table; width: 100%; }
+        .nav-left, .nav-right { display: table-cell; vertical-align: middle; }
+        .nav-right { text-align: right; }
+        .profile-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text);
+            border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer;
+        }
+        .header-content { margin-top: 20px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+        .content-body { padding: 48px 24px 24px 24px; max-width: 600px; margin: 0 auto; }
+        .section-bar { display: table; width: 100%; margin-bottom: 20px; }
+        .section-row { display: table-row; }
+        .section-title { display: table-cell; font-size: 18px; font-weight: 700; color: var(--text-color); }
+        .chapter-count-tag { display: table-cell; text-align: right; }
+        .pill-tag { background-color: var(--primary-color); color: var(--white-text); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .coming-soon-card {
+            background-color: var(--bg-color); border-radius: 20px; padding: 40px 24px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); text-align: center;
+            border: 2px dashed var(--secondary-color);
+        }
+        .coming-soon-icon { font-size: 48px; margin-bottom: 16px; }
+        .coming-soon-title { font-size: 20px; font-weight: 700; color: var(--primary-color); margin-bottom: 8px; }
+        .coming-soon-text { font-size: 14px; color: #7E8B9B; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <button class="profile-btn" onclick="goHome()">🏠 मुखपृष्ठ</button>
+                    <span style="font-weight:800;font-size:20px;letter-spacing:1px;margin-left:12px;">महा-बोर्ड</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-content">
+            <p class="app-title">गणित भाग २ (भूमिती)</p>
+            <h1 class="main-heading">इयत्ता १० वीचे प्रकरण</h1>
+        </div>
+    </header>
+    <main class="content-body">
+        <div class="section-bar">
+            <div class="section-row">
+                <div class="section-title">पाठ्यपुस्तक प्रकरण</div>
+                <div class="chapter-count-tag"><span class="pill-tag">लवकरच</span></div>
+            </div>
+        </div>
+        <div class="coming-soon-card">
+            <div class="coming-soon-icon">📏</div>
+            <div class="coming-soon-title">प्रकरणे तयार होत आहेत</div>
+            <div class="coming-soon-text">गणित भाग २ (भूमिती) साठी स्वाध्याय साहित्य तयार केले जात आहे. प्रकरणनिहाय प्रश्न व उत्तरांसाठी लवकरच भेट द्या.</div>
+        </div>
+    </main>
+    <script>
+        function goHome() { window.location.href = '../homepagemarathi/marathihome.html'; }
+    </script>
+</body>
+</html>

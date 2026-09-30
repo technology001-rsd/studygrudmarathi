@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.2 A Lesson in Life from a Beggar - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 3 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">3.2 A Lesson in Life from a Beggar</h1>
+            <small>Sudha Murthy</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">Complete the following table: Utterance — Who said — To whom (a) "Shwetha is a very beautiful girl, isn't she? " (b) "When a pony is young, he looks handsome. " (c) "It's a beautiful day. " (d) "No, the sun is too hot. " (e) "I'm all excited, it's nice to meet old friends. " (f) "Let's chat. " (g) "We won't get a taxi in this rain. " (h) "Then, what's the secret of your energy? " (i) "A beggar changed my life. "</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) "Shwetha is a very beautiful girl, isn't she?" — The writer (Sudha Murthy) said to Meena.
+(b) "When a pony is young, he looks handsome." — Meena said to the writer.
+(c) "It's a beautiful day." — The writer said to Meena.
+(d) "No, the sun is too hot." — Meena said to the writer.
+(e) "I'm all excited, it's nice to meet old friends." — Meena said to the writer.
+(f) "Let's chat." — Meena said to the writer.
+(g) "We won't get a taxi in this rain." — The writer said to Meena.
+(h) "Then, what's the secret of your energy?" — The writer asked Meena.
+(i) "A beggar changed my life." — Meena said to the writer.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">State whether the following statements are Right (✓) or Wrong (✗). Correct the wrong ones. (a) The author and Meena were great enemies. (b) Meena was a very cheerful person initially. (c) Meena stayed alone in an apartment in Delhi. (d) Meena was the second child of her parents. (e) The author spotted Meena at Bombay's Flora Fountain. (f) The beggar and the young girl were playing on the road because there was a lot of traffic. (g) The scene of the beggar and the girl made Meena peep into her own life. (h) The beggar became Meena's role model. (i) It took Meena almost two years to put the change into effect. (j) Meena was able to give Gurudakshina directly to her Guru, the beggar.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) ✗ — Correction: The author and Meena were good friends.
+(b) ✗ — Correction: Meena was a very pessimistic person initially (forever unhappy).
+(c) ✓ — Meena stayed alone in an apartment in Delhi (her parents lived in Delhi).
+(d) ✗ — Correction: Meena was an only child (not the second child).
+(e) ✓ — The author spotted Meena at Bombay's Flora Fountain.
+(f) ✗ — Correction: They were playing because there was no traffic.
+(g) ✓ — The scene made Meena peep into her own life.
+(h) ✓ — The beggar became Meena's role model.
+(i) ✓ — It took Meena almost two years to put the change into effect.
+(j) ✗ — Correction: The beggar had died by then, so she sponsored his granddaughter to a boarding school instead.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Choose the correct alternative to complete the sentences: (a) Meena, who is an LIC officer, is (i) a pessimistic person (ii) an optimistic person (iii) a disabled person. (b) The writer was standing near Akbarallys because (i) she was waiting for her friend Meena (ii) she was waiting for rain to stop (iii) she wanted to buy something. (c) The only thought in the writer's mind was (i) why the rain was not stopping (ii) what had brought about such a change in Meena (iii) how the beggar had changed Meena's life. (d) Meena sponsored the granddaughter of the beggar because (i) she was alone after his death (ii) it was a token of respect for the beggar (iii) she was rich.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) (i) a pessimistic person initially, then became optimistic
+(b) (ii) she was waiting for rain to stop
+(c) (ii) what had brought about such a change in Meena
+(d) (ii) it was a token of respect for the beggar</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">How did the beggar change Meena's attitude? Discuss and complete the web: Beggar's activities that changed Meena's attitude.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Beggar's activities that changed Meena's attitude:
+• The beggar and his granddaughter were playing happily in the rain despite having nothing.
+• They were laughing, clapping and screaming joyously as if they were in paradise.
+• Hunger and rain did not matter to them; they were happy with life as it was.
+• They had no comforts but had the most important asset — the ability to be happy.
+• The beggar did not complain about his poverty but enjoyed the simple pleasures of life.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">(A) How did Meena show her gratitude to her guru? (B) Why would Meena be sad initially? Pick out sentences from the story that prove Meena was a pessimist.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(A) Meena showed her gratitude by sponsoring the beggar's granddaughter to a boarding school as a mark of respect to him, since the beggar had died by the time she understood things.
+
+(B) Reasons and evidence:
+1. "She was forever unhappy." — Proves her constant negativity.
+2. She would belittle achievements: "Naturally, his father is a school teacher."
+3. She was pessimistic about beauty: "When a pony is young, he looks handsome… Wait for some time. Shwetha will be uglier than anyone you know."
+4. She refused to enjoy simple things: "No, the sun is too hot and I get tired if I walk too much. Besides, who says walking is good for health?"
+5. "She stayed alone… and had the habit of complaining about anything and everything."</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">(A) Find antonyms from the story: optimistic, drizzle, new, lie, ugly, frowned, hell, unhappy, disrespect, unimportant. (B) Arrange the events in sequence of occurrence (about Meena's encounter with the beggar).</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(A) Antonyms:
+• optimistic → pessimistic (Meena's initial nature)
+• drizzle → pour/pouring (heavy rain)
+• new → old
+• lie → truth
+• ugly → beautiful/pretty
+• frowned → smiled
+• hell → paradise
+• unhappy → happy/cheerful
+• disrespect → respect
+• unimportant → important
+
+(B) Correct sequence:
+(1) I saw from the window the beggar and the young girl playing on the road.
+(2) They enjoyed playing in the rain as if they were in paradise.
+(3) On seeing them so very happy, I felt ashamed of myself.
+(4) I decided to change using the beggar as role model.
+(5) It took two years to put the change into effect.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">How did the beggar change Meena's attitude towards life? Write in 5-6 lines.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">• The incident made Meena look at her own life.
+• She realized she had many comforts that the beggar lacked.
+• Yet the beggar and his granddaughter knew how to be happy with life as it was.
+• She felt ashamed of her ungrateful attitude.
+• She started making a list of what she had and what she didn't have, and found she had more to be grateful for.
+• Using the beggar as her role model, she decided to change her attitude — and it took two years to put the change into effect.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Summarise the story with the help of the points: (a) Meena's initial attitude (b) Meena's meeting with Sudha Murthy in Mumbai (c) Beggar's incident (d) Change in attitude</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Meena was a pessimistic LIC officer who always complained about everything. She had no positive words for anyone and made people around her feel depressed. The writer, Sudha Murthy, was her friend.
+
+Years later, they met unexpectedly at Flora Fountain in Mumbai during heavy rain. To the writer's surprise, Meena was now cheerful and happy. Curious about this change, the writer asked Meena what had transformed her.
+
+Meena revealed that a beggar who used to sit outside her house with his granddaughter had changed her life. One rainy day, she saw them playing joyfully in the rain despite their poverty. They were happy with nothing. This scene made Meena realize how ungrateful she was. She decided to change her attitude using the beggar as her role model.
+
+It took Meena two years to become a positive person. She now finds happiness in small things. Although the beggar died, she showed gratitude by sponsoring his granddaughter's education.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">Write the summary making Meena the narrator. Begin with 'I worked in Bangalore in LIC. Sudha was my friend…'</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">I worked in Bangalore in LIC. Sudha was my friend. I was always unhappy and pessimistic. I never had anything positive to say about anyone. One day, I was transferred to Bombay. Years passed.
+
+One rainy day, Sudha met me at Flora Fountain. She was surprised to see me so cheerful. She asked me what had changed me. I told her about a beggar who used to sit outside my house with his granddaughter. I used to give them leftovers.
+
+One monsoon day, I saw them playing happily in the rain. They had nothing — no food, no money — yet they were overjoyed. I realized I had so many comforts but was never happy. I felt ashamed. That day, I decided to change my attitude using the beggar as my role model. It took two years, but now I am always happy. I find joy in everything.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">Project: Collect four different stories written by Sudha Murthy. Select a story and write it in the form of a play.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Four stories by Sudha Murthy:
+1. "How I Taught My Grandmother to Read"
+2. "The Day I Stopped Drinking Water"
+3. "A Lesson in Life from a Beggar" (this chapter)
+4. "The Magic of the Lost Temple"
+
+Sample play adaptation of "How I Taught My Grandmother to Read":
+
+Characters: Grandmother (Krishnaveni), Granddaughter (Sudha), Teacher
+
+Scene: Living room. Evening.
+Grandmother: (sadly) I feel so helpless. Everyone else can read the story, but I cannot.
+Sudha: Don't worry, Grandmother. I will teach you!
+Grandmother: But I am old. Can I learn?
+Sudha: Of course! We just need patience.
+(Over the next few weeks, Sudha teaches her grandmother the alphabet.)
+Grandmother: (happily) I can read! Thank you, my dear teacher.
+Sudha: You are the best student, Grandmother!</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-10')" aria-expanded="false">
+          <span class="qa-num">11</span>
+          <span class="qa-q">Language Study: 1. Punctuate the following sentences. 2. Add a suffix to make nouns from given words. 3. Change into Indirect speech.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-10">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">1. Punctuation:
+(a) "Did you give any gurudakshina to your guru?" I asked.
+(b) "No, there isn't anyone like that," she said.
+
+2. Nouns from words by adding suffix:
+(i) kind → kindness
+(ii) happy → happiness
+(iii) ignore → ignorance
+(iv) assure → assurance
+(v) imagine → imagination
+(vi) depute → deputation
+(vii) manage → management
+(viii) assess → assessment
+
+3. Indirect Speech:
+(a) I told Meena that it was a beautiful day.
+(b) Meena said that she was really excited, it was nice to meet old friends, and asked what I was doing there.
+(c) I grumbled that we wouldn't get a taxi in that rain.
+(d) She said that we would buy an umbrella and then go to the Grand Hotel.
+(e) I asked Meena if she had given any gurudakshina to her Guru.</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>
