@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>उपयोजित इतिहास - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण 3</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">इतिहास व राज्यशास्त्र</p>
+            <h1 class="main-heading">उपयोजित इतिहास</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण 3 • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="map" onclick="filterQA('map', this)">संकल्पनाचित्र</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">उपयोजित इतिहासाचा वापर ........... क्षेत्रात होतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) नगर नियोजन</li><li class="opt ">ब) केवळ संशोधन</li><li class="opt ">क) केवळ शिक्षण</li><li class="opt ">ड) केवळ कला</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) नगर नियोजन</span></div>
+        <p class="explain">उपयोजित इतिहासाचा वापर नगर नियोजन, पर्यटन, पर्यावरण, संग्रहालये अशा अनेक क्षेत्रांत होतो.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">स्थानिक इतिहास हा ........... जोडण्याचे काम करतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) देश व परदेश</li><li class="opt correct">ब) लोक व त्यांची भूमी</li><li class="opt ">क) राजे व प्रजा</li><li class="opt ">ड) विद्यार्थी व शिक्षक</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) लोक व त्यांची भूमी</span></div>
+        <p class="explain">स्थानिक इतिहासामुळे लोकांना त्यांच्या भूमीशी, परंपरेशी नाते जोडता येते व ओळख निर्माण होते.</p></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) नगर नियोजन - ऐतिहासिक वारसा जपणे  (२) पर्यटन - ऐतिहासिक स्थळांना भेटी  (३) पर्यावरण - इतिहासाचा संबंध नाही  (४) संग्रहालय - वस्तूंचे जतन</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) पर्यावरण - इतिहासाचा संबंध नाही</span></div>
+        <p class="explain">पर्यावरणाचा इतिहासाशी संबंध आहेच; पर्यावरणीय बदलांचा ऐतिहासिक अभ्यास उपयोजित इतिहासात महत्त्वाचा आहे. म्हणून ही जोडी चुकीची.</p></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">स्थानिक इतिहास</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="answer-text">एखाद्या गाव, तालुका किंवा प्रदेशाचा इतिहास म्हणजे स्थानिक इतिहास. त्यात तेथील लोक, संस्कृती, वास्तू, संघर्ष यांचा समावेश असतो. तो लोकांना त्यांच्या मुळांशी जोडतो.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">वास्तुवारसा (Built Heritage)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="answer-text">मानवाने बांधलेल्या ऐतिहासिक वास्तू, किल्ले, मंदिरे, वाड्या यांचा समूह म्हणजे वास्तुवारसा. त्याचे जतन व नियोजन उपयोजित इतिहासात महत्त्वाचे.</div></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">उपयोजित इतिहासामुळे नागरिकांना इतिहासाशी जोडता येते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="answer-text">उपयोजित इतिहास वर्तमान जीवनाशी इतिहासाचा वापर करतो; पर्यटन, स्मारके, स्थानिक उत्सव यांतून सामान्य नागरिकांना इतिहासाचा अनुभव येतो.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुरातत्त्व संशोधनात उपयोजित इतिहास मदत करतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="answer-text">उत्खननात मिळालेल्या वस्तूंचा अर्थ लावण्यासाठी ऐतिहासिक संदर्भ व ज्ञान उपयोगी पडते; त्यामुळे पुरातत्त्व व उपयोजित इतिहास एकमेकांना पूरक आहेत.</div></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="map">
+      <div class="section-title-bar"><span class="section-dot"></span>संकल्पनाचित्र पूर्ण करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="map">
+        <button class="qa-header" onclick="toggleQA('q-map-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">उपयोजित इतिहासाचे उपयोग (संकल्पनाचित्र)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-map-4-0">
+          <div class="qa-inner"><div class="answer-text">नगर/प्रादेशिक नियोजन → पर्यटन विकास → संग्रहालय व प्रदर्शन → पर्यावरण व्यवस्थापन → स्थानिक इतिहास जोपासना → ऐतिहासिक ठेव्यांचे जतन.</div></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">उपयोजित इतिहास म्हणजे काय? त्याची उदाहरणे द्या.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="answer-text">इतिहासाचा वर्तमानातील व्यावहारिक उपयोग म्हणजे उपयोजित इतिहास. नगर नियोजनात जुन्या वस्त्यांचे जतन, पर्यटनात ऐतिहासिक स्थळांचा विकास, संग्रहालयात वस्तूंचे प्रदर्शन, पर्यावरण नियोजनात ऐतिहासिक हवामान नोंदी यांसारखे उपयोग त्यात येतात.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">नागरी नियोजनात इतिहासाचा उपयोग स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="answer-text">शहर विकास करताना जुन्या वास्तू, रस्ते, पाणीव्यवस्था यांचा अभ्यास करून नियोजन केल्यास ऐतिहासिक स्वरूप टिकते. जुन्या वाड्यांचे जतन व नवीन विकासात समन्वय साधला जातो.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">पर्यटनात इतिहासाचा उपयोग कसा होतो?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="answer-text">ऐतिहासिक किल्ले, लेणी, स्मारके हे पर्यटनाचे आकर्षण असतात. पर्यटनामुळे त्या ठिकाणांचे जतन होते व स्थानिक अर्थव्यवस्थेला चालना मिळते; तसेच लोकांना इतिहासाची प्रत्यक्ष ओळख होते.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">स्थानिक इतिहासाचे महत्त्व सांगा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-3">
+          <div class="qa-inner"><div class="answer-text">स्थानिक इतिहासामुळे लोकांना त्यांच्या भूमीचा व पूर्वजांचा इतिहास कळतो. त्यातून गावाची ओळख, अभिमान व एकात्मता निर्माण होते आणि वारसा जपण्याची जाणीव येते.</div></div>
+        </div>
+      </div></div>
+    </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './historychapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

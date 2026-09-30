@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.4 Unbeatable Super Mom — Mary Kom - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 4 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">4.4 Unbeatable Super Mom — Mary Kom</h1>
+            <small>—</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">Choose the correct alternatives: (a) What kind of text is it? (i) story (ii) speech (iii) interview (iv) essay (b) Which state does Mary Kom belong to? (i) Maharashtra (ii) Tamil Nadu (iii) Kerala (iv) Manipur (c) Who inspired Mary Kom to choose boxing? (i) Dingko Singh (ii) Charles Atkinson (iii) Mangte Tonpa Kom (iv) Adams (d) What did Mary Kom prefer being called? (i) Super Mom (ii) Super Boxer (iii) Super Woman (iv) Super Being</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) (iii) interview (with a biographical introduction)
+(b) (iv) Manipur
+(c) (i) Dingko Singh
+(d) (i) Super Mom (she said "I love being a mom. That's the best thing that has ever happened to me.")</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">Find out the names of cities and their importance in Mary Kom's life.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Kangthei — Mary Kom's birthplace (village in Manipur)
+(b) Moirang Lamkhai (Churachandpur district) — her home district in rural Manipur
+(c) United States — where she made her international debut at the first AIBA Women's World Boxing Championship (2001)
+(d) Pune — where she trained with male boxers for the Olympics
+(e) London — where she won the bronze medal in the 2012 Olympics</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Find the full forms of: OGQ, IBN, MTV, YPA, AIBA, CNN.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) OGQ — Olympic Gold Quest
+(b) IBN — Indian Broadcasting Network
+(c) MTV — Music Television
+(d) YPA — Young People's Association / Youth Parliamentary Association (context-dependent)
+(e) AIBA — Association Internationale de Boxe Amateur (International Boxing Association)
+(f) CNN — Cable News Network</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">Write the Fact File of Mary Kom.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Full name: Mary Mangte Kom
+(b) Native of: Kangthei village, Moirang Lamkhai, Churachandpur district, Manipur
+(c) Early life and interests: Helped parents in jhum fields, went to school, learned athletics initially and then boxing
+(d) Special sport taken up: Boxing (flyweight 51 kg)
+(e) Inspired by: Dingko Singh (fellow Manipuri who won gold at 1998 Bangkok Asian Games)
+(f) Coach: Charles Atkinson
+(g) Early achievements: Won Manipur State women's boxing championship and regional championship in 2000; won silver at first AIBA World Championship in 2001
+(h) International achievements: 5 times World Boxing Champion; Bronze medal at 2012 London Olympics; Gold at 2018 Commonwealth Games
+(i) Her passion: Boxing and being a mother to her twin children
+(j) Awards: Arjuna Award (2003), Padma Shree (2006), Rajiv Gandhi Khel Ratna (2009)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">Find the special qualities of Mary Kom. Complete the web.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Qualities of Mary Kom:
+• Humble
+• Confident
+• Hardworking
+• Determined
+• Courageous
+• Optimistic
+• Loving mother
+• Disciplined
+• Grateful
+• Inspiring
+• Humorous
+• Strong-willed</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">'Super Mom' refers to an excellent mother. Give three reasons why 'super' has been added to 'mom'.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">1. Mary Kom balanced her career as a world-class boxer with being a mother to her twin children, proving that women can excel in both professional and personal life.
+2. She brought glory to India by winning medals at international events while managing her family responsibilities.
+3. Despite her fame and achievements, she considers being a mother her greatest joy and says, "I love being a mom. That's the best thing that has ever happened to me."</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">Answer in your own words: (a) What makes the writer call Mary Kom 'a legend'? (b) What prime quality did Mary Kom display during her first Olympic attempt? What was her bad luck? (c) What does Mary Kom suggest for India to win more Olympic Gold Medals?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Mary Kom is called a legend because she is a five-time World Boxing Champion and the only boxer to win a medal in every one of the six world championships. She is the first Indian woman boxer to win an Olympic medal and genuinely apologized to the nation for not winning gold — showing her humility and greatness.
+
+(b) She displayed confidence and determination. She was well-prepared and confident about herself despite her coach not being allowed to accompany her. Her bad luck was that she lost in the semi-finals due to what she felt were unfortunate decisions by the judges.
+
+(c) Mary Kom suggests that more people should take up sports as a full-time career. More corporate sponsors should support players so they don't have financial pressure and can focus on their games.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Fill in the flowchart after rearranging the facts in proper order. (a) Mary Kom made her first appearance at international level. (b) She sparred with male boxers in Pune. (c) Mary Kom won the Manipur State Women's boxing championship. (d) She won a bronze medal in the 2012 Olympics. (e) Mary Kom decided to take up boxing.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Correct order:
+1. (e) Mary Kom decided to take up boxing (after being inspired by Dingko Singh in 2000).
+2. (c) Mary Kom won the Manipur State Women's boxing championship (2000).
+3. (a) Mary Kom made her first appearance at international level (2001, USA, silver medal).
+4. (b) She sparred with male boxers in Pune (before the 2012 Olympics).
+5. (d) She won a bronze medal in the 2012 Olympics.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">Make sentences using: debut, elation, sponsor, reinforced, humble surroundings.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">debut:
+1. She made her debut on the international stage at the age of 18.
+2. His debut film was a huge success.
+
+elation:
+1. She felt great elation after winning the gold medal.
+2. The team's elation was obvious after their victory.
+
+sponsor:
+1. Many companies sponsor talented athletes.
+2. We need a sponsor for our school's sports event.
+
+reinforced:
+1. Her success reinforced her belief in hard work.
+2. The walls were reinforced with steel.
+
+humble surroundings:
+1. Despite her humble surroundings, she dreamt big.
+2. He grew up in humble surroundings but became a great scientist.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">Find antonyms from the text: (a) Arrogant (b) Finally (c) Disqualify (d) Diffident</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Arrogant → humble
+(b) Finally → initially
+(c) Disqualify → qualify
+(d) Diffident → confident</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-10')" aria-expanded="false">
+          <span class="qa-num">11</span>
+          <span class="qa-q">Frame a set of 10 questions to interview a famous cricketer.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-10">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">1. Good morning, sir. When did your interest in cricket begin?
+2. Who inspired you to take up cricket as a career?
+3. Who was your first coach and how did he help you?
+4. What was your most memorable match?
+5. What is your greatest achievement so far?
+6. How do you handle pressure during important matches?
+7. What is your training routine like?
+8. Who is your idol in the world of cricket?
+9. What advice would you give to young cricketers?
+10. What are your future goals in cricket?</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.3 O Captain! My Captain! - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 4 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">4.3 O Captain! My Captain!</h1>
+            <small>Walt Whitman</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">Make a Word Register of all words related to 'Ship' from the poem.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Words related to Ship:
+(a) Port (e) voyage
+(b) ship (f) deck
+(c) keel (g) anchored
+(d) vessel (h) trip</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">Complete the following sentences: (a) The Captain lies on the deck _____ (b) The Captain doesn't answer as _____ (c) Captain does not feel anything _____ (d) The bugle and flag are _____</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) The Captain lies on the deck fallen cold and dead.
+(b) The Captain doesn't answer as his lips are pale and still; he has no pulse nor will.
+(c) Captain does not feel anything as he is dead and his arm has no feeling.
+(d) The bugle and flag are for the Captain's honour — the flag is flung (displayed) and the bugle trills (plays) for him.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Match the symbols/images with what they refer to: (1) the ship (2) the fearful trip/voyage (3) the port (4) the bells ringing (5) Captain (6) anchored safe (7) no pulse, nor will</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(1) the ship → (c) United States of America
+(2) the fearful trip/voyage → (e) the deadly Civil War
+(3) the port → (g) peace after winning the war
+(4) the bells ringing → (f) celebrating victory
+(5) Captain → (b) the President of USA (Abraham Lincoln)
+(6) anchored safe → (a) victory in the war
+(7) no pulse, nor will → (d) lifeless/dead</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">(A) Pick out lines where the poet directly addresses: (a) the dead Captain (b) the grief in his heart (c) the sea-shore (B) Find one example of each: Personification, Alliteration, Repetition, Exclamation, Tautology, Antithesis.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(A)
+(a) the dead Captain:
+1. "O Captain! My Captain! rise up and hear the bells"
+2. "Here Captain! dear father! This arm beneath your head"
+
+(b) the grief in his heart:
+1. "But O heart! heart! heart!"
+2. "O the bleeding drops of red"
+
+(c) the sea-shore:
+1. "Exult, O shores, and ring, O bells!"
+
+(B)
+(a) Personification: "the ship is anchor'd safe and sound" (ship is described as safe/sound like a person)
+(b) Alliteration: "flag is flung" / "bugle trills" / "steady keel"
+(c) Repetition: "Fallen cold and dead" (repeated at end of each stanza); "O Captain! My Captain!" (repeated)
+(d) Exclamation: "O Captain! My Captain!" / "But O heart! heart! heart!"
+(e) Tautology: "safe and sound" (both mean similar)
+(f) Antithesis: "Exult, O shores" vs "But I, with mournful tread" (joy vs sorrow)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">Find and answer in your own words: (a) What are the signs of the people celebrating victory? (b) How are the crowds eagerly waiting to felicitate the Captain? (c) What are the signs that the Captain has passed away? (d) Why does the speaker put his arm under the Captain's head? (e) Describe the grief that the speaker feels at the death of his Captain.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Signs of celebration: The bells are ringing, people are exulting, crowds are swaying with eager faces, bouquets and ribbon'd wreaths are ready, the flag is flung, and the bugle trills.
+
+(b) The crowds are "a-crowding" on the shores, they are calling for the Captain, their faces are eager, and they have prepared bouquets and wreaths to honour him.
+
+(c) Signs that the Captain has passed away: "His lips are pale and still"; "He has no pulse nor will"; "He does not feel my arm"; "Fallen cold and dead."
+
+(d) The speaker puts his arm under the Captain's head as a gesture of love, care and respect, hoping to comfort him even in death — as a son would care for his father.
+
+(e) The speaker is deeply grief-stricken. He addresses the Captain with desperate hope: "rise up and hear the bells." He cannot accept the reality and calls it "some dream." Even after the victory is won, his heart bleeds. He walks the deck with "mournful tread," consumed by sorrow while the world celebrates.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">Find who the speaker addresses in the first two stanzas and the last stanza.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">In the first two stanzas, the speaker addresses the dead Captain (Abraham Lincoln) directly — "O Captain! My Captain!" — pleading with him to rise up and see the celebrations.
+
+In the last stanza, the speaker addresses the shores and bells — "Exult, O shores, and ring, O bells!" — telling the world to celebrate, while he walks sadly on the deck. He also speaks about the Captain in third person: "My Captain does not answer."</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">Fill the qualities in the diagram: Qualities of a Ship's Captain and a Nation's Leader.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Common Qualities:
+• Courage
+• Integrity
+• Visionary
+• Confidence
+• Humane
+• Self-disciplined
+• Sympathetic
+• Leadership
+• Foresight
+• Positive attitude
+• Role model
+• Selfless service
+• Good administrator
+
+Qualities of a Ship's Captain specifically: naval expert, knowledge of weather signs
+Qualities of a Nation's Leader specifically: good orator, political wisdom</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Complete the following choosing from the alternatives: (a) The rhyme-scheme of the poem is (aabbccdd / abcbdede / aabbcded) (b) The line repeated in every stanza (c) The steady rhythm consists of pattern of (Three/Four/Five) beats (d) In the _____ stanza the speaker does not address the captain (First/Second/Third) (e) The type of poem is _____ (sonnet, lyric, elegy)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) The rhyme-scheme of the poem is aabbcded (first 4 lines aabb, then cded)
+(b) The line repeated in every stanza: "Fallen cold and dead"
+(c) The steady rhythm consists of a pattern of Four beats (tetrameter) and Three beats (trimeter) alternately
+(d) In the Third stanza the speaker does not address the captain directly (he speaks ABOUT the captain)
+(e) The type of poem is an elegy (a poem mourning the death of a person)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">The poem describes the sad demise of the Captain. How would you console the son of the Captain?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Dear friend, I am deeply saddened by the loss of your father, our beloved Captain. He was a great leader who guided our nation through its darkest hours. Please accept my heartfelt condolences.
+
+His passing is indeed an act of God, and we must bow to His will, no matter how painful it is. Your father's courage, wisdom and integrity will always be remembered. His legacy will live on in the hearts of every citizen.
+
+Be strong — your father would want you to carry forward his values of truth, justice and service. You have his strength in your blood. Time heals all wounds, and his memory will give you the courage to face this loss.
+
+If you ever need anything, I will always be there for you. May his soul rest in peace.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">Write an appreciation of the poem in about 12-15 sentences.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Title: O Captain! My Captain!
+Poet: Walt Whitman
+
+The poem is an elegy written in memory of President Abraham Lincoln after his assassination. It uses the extended metaphor of a ship returning safely from a voyage to represent the USA after winning the Civil War. The Captain represents Lincoln, who led the nation through the war but was killed just as victory was achieved.
+
+Rhyme scheme: aabbcded. The poem has three stanzas, each ending with the refrain "Fallen cold and dead."
+
+The central theme is the contrast between public celebration and personal grief. While the nation rejoices in victory, the speaker mourns the loss of its great leader.
+
+Figures of speech used include Apostrophe ("O Captain! My Captain!"), Personification (Triumph and Disaster as impostors), Metaphor (ship = nation, Captain = Lincoln), Alliteration ("flag is flung"), Repetition ("fallen cold and dead"), and Antithesis (celebration vs mourning).
+
+The language is emotional, rhythmic and powerful. The poem moves from desperate hope ("rise up") to sad acceptance ("does not answer").
+
+I like this poem because it beautifully captures the mixed feelings of victory and loss, and honours a great leader in a touching way.</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

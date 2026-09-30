@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.1 The World is Mine - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 4 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">4.1 The World is Mine</h1>
+            <small>Joy Lovelet Crawford</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">Complete the following, after reading the poem: (a) The poet saw a lovely girl hobble down _____ (b) The poet wanted to buy _____ from the lad (c) The poet told the boy to join others to play but he couldn't _____ (d) The poet requests _____ to forgive him.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) The poet saw a lovely girl hobble down the aisle (on the bus).
+(b) The poet wanted to buy sweets from the lad.
+(c) The poet told the boy to join others to play but he couldn't hear.
+(d) The poet requests God to forgive him.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">Match the following: (a) The beautiful girl… (b) The lad who was selling sweets… (c) The child, watching others play… (d) The poet says 'The World is Mine' because…</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) The beautiful girl → (iv) had a handicap in her legs.
+(b) The lad who was selling sweets → (iii) was very thankful to the speaker.
+(c) The child, watching others play → (ii) was hearing impaired.
+(d) The poet says 'The World is Mine' → (i) he can experience the beauty and gifts of his life.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">What does the poet mean when she says 'The World is Mine'? Explain the importance of the title.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">The poet means that she is immensely blessed despite not realizing it before. When she compares herself to people with disabilities — a girl with one leg, a blind lad, a deaf boy — she realizes how fortunate she is to have two legs, two eyes and two ears. The title "The World is Mine" signifies that true wealth is the ability to see, hear, walk and experience the beauty of life. We often complain about small things, forgetting that many people have far greater challenges. The title reminds us to be grateful for what we have.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">Answer in your own words: (a) What is the theme of the poem? (b) Do you think people with some handicap should beg for money? Justify. (c) What is better — to completely take over the work of a disabled person, or encourage such a person to do it himself/herself?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Theme: The poem teaches us to be grateful for our abilities and blessings instead of complaining. By comparing ourselves with those who are less fortunate, we realize how rich our lives truly are. The central message is gratitude and appreciation for God's gifts.
+
+(b) No, people with handicaps should not beg for money. They have talents and abilities that can be developed. With proper education, training and encouragement, they can lead dignified, independent lives. Society should provide them with equal opportunities, not charity.
+
+(c) It is better to encourage a disabled person to do things himself/herself in a different way. Taking over completely makes them dependent and lowers their self-esteem. Encouraging independence builds confidence and self-respect. We should support them, not do things for them.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">(a) Make a list of pairs of rhyming words from the poem. (b) What is the rhyme scheme of the first two stanzas?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Rhyming words:
+hair – fair, aisle – smile, whine – mine, charm – harm, kind – blind, blue – do, dear – hear, go – glow, know – (rhymes with) though, whine – mine.
+
+(b) Rhyme scheme of the first two stanzas: aabb
+Each stanza has 4 lines with the pattern: line 1 rhymes with line 2, line 3 rhymes with line 4.
+Example Stanza 1: hair (a) – fair (a), aisle (b) – smile (b)
+Example Stanza 2: charm (a) – harm (a), kind (b) – blind (b)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">Pick from the poem lines which contain Figures of Speech: (a) Inversion (b) Interrogation (c) Onomatopoeia (d) Apostrophe</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Inversion: "I envied her, she seemed so gay" (normal: She seemed so gay, I envied her)
+"Today on a bus, I saw a lovely girl" (inverted word order)
+(b) Interrogation: "why don't you join the others dear?" (rhetorical question)
+(c) Onomatopoeia: "whine" — the sound of complaining in a crying tone
+(d) Apostrophe: "O God, forgive me when I whine" — directly addressing God</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">Pick out 4 lines that contain Imagery.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Lines containing imagery:
+1. "Today on a bus, I saw a lovely girl with silken hair" (visual imagery)
+2. "I saw her hobble down the aisle" (visual imagery)
+3. "She had one leg and wore a crutch" (visual imagery)
+4. "I have two eyes… With eyes to see the sunset's glow" (visual imagery)
+5. "I saw a child with eyes of blue" (visual imagery)</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Compose a dialogue among three classmates — one unable to walk properly, one can't hear, one can't see — about problems they face.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Student 1 (unable to walk): Do you know how many problems I have to face when I decide to go anywhere? I can't climb stairs easily and I need help to move around.
+
+Student 2 (can't hear): I can't hear anything. When people talk, I miss most of the conversation. I feel left out during group discussions.
+
+Student 3 (can't see): So sad! You both can't walk or hear, but my problem is more serious than yours. You know, I can't see this beautiful world. I can't see the sun, the trees, the faces of my loved ones.
+
+Student 1: I understand. But we must support each other.
+
+Student 2: (leaning forward) What did you say? Can you write it down?
+
+Student 3: Let's help each other. I'll speak for you, you can guide me while walking. Together we are strong!</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">Develop/Complete a story: A polio victim and a strong, but visually challenged man were friends. They wished to go to pay homage at a place of worship, three kilometres away. Continue the story and end with a moral/proverb.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Title: Together We Stand
+
+A polio victim named Rohan and a strong but visually challenged man named Arun were close friends. They wished to go to a temple three kilometres away to pay homage.
+
+Rohan could not walk properly and Arun could not see. But they did not give up. Rohan sat on Arun's shoulders and guided him, "Turn left... now go straight... there's a stone ahead." In this way, they supported each other.
+
+Arun walked steadily with Rohan's directions, and Rohan rode on Arun's strong shoulders. They crossed the road, walked through the market, and reached the temple after an hour.
+
+They prayed together and felt immense joy. Their teamwork had made the impossible possible.
+
+Moral: "Unity is strength." / "Where there is a will, there is a way."
+Or: "In helping others, we help ourselves."</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">Translate into your medium of instruction: (a) A disabled person should be respected in society. (b) A true friend ignores your weaknesses, corrects you and encourages you to make full use of your strengths. (c) One cannot change everything that one faces; but nothing can be changed unless one faces it.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(Marathi translation):
+(a) समाजात अपंग व्यक्तीचा आदर केला पाहिजे.
+(b) खरा मित्र तुमच्या कमकुवतपणाकडे दुर्लक्ष करतो, तुम्हाला सुधारतो आणि तुमच्या सामर्थ्याचा पूर्ण वापर करण्यास प्रोत्साहित करतो.
+(c) एखाद्याला जे काही सामोरे जावे लागते ते सर्व बदलता येत नाही; परंतु जोपर्यंत एखादी गोष्ट सामोरी जात नाही तोपर्यंत काहीही बदलता येत नाही.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-10')" aria-expanded="false">
+          <span class="qa-num">11</span>
+          <span class="qa-q">Write a letter to your father requesting him to attend the social and cultural gathering of your school.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-10">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">[Date]
+
+Dear Dad,
+
+I hope you are doing well. I am writing to invite you to our school's Social and Cultural Gathering which is going to be a mega event this year. It will be held on [Date] at [Time] in the school auditorium.
+
+There will be a variety of activities including dance performances, skits, singing competitions, and an art exhibition. I am participating in two activities — a group dance and a debate competition. I have been practising hard for weeks.
+
+Your presence will boost my confidence greatly. Please do come and watch me perform. I really want you to be there.
+
+Looking forward to seeing you at the event.
+
+Your loving son/daughter,
+[Your Name]</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-11')" aria-expanded="false">
+          <span class="qa-num">12</span>
+          <span class="qa-q">Project: Poster-making competition for an Eye/Blood Donation Camp.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-11">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Sample Poster Design:
+
+┌─────────────────────────────────────────┐
+│       🩸 BLOOD DONATION CAMP 🩸          │
+│                                         │
+│   "Donate Blood — Save a Life"          │
+│                                         │
+│   Date: [Date]                          │
+│   Time: 9:00 AM to 4:00 PM              │
+│   Venue: School Auditorium              │
+│                                         │
+│   • Free Health Check-up                │
+│   • Refreshments for Donors             │
+│   • Certificate of Appreciation         │
+│                                         │
+│   Open for all 18+ healthy individuals  │
+│                                         │
+│   Organized by: [School Name]           │
+│   In association with: Red Cross        │
+└─────────────────────────────────────────┘</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

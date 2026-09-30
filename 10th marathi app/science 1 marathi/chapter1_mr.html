@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गुरुत्वाकर्षण - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण १</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान १</p>
+            <h1 class="main-heading">गुरुत्वाकर्षण</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण १ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">वैश्विक गुरुत्वाकर्षण स्थिरांक (G) चे मूल्य किती असते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) 6.67 × 10⁻¹¹ Nm²/kg²</li><li class="opt ">ब) 9.8 m/s²</li><li class="opt ">क) 3.14 × 10⁸ m/s</li><li class="opt ">ड) 1.6 × 10⁻¹⁯ C</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) 6.67 × 10⁻¹¹ Nm²/kg²</span></div>
+        <p class="explain">गुरुत्वाकर्षण स्थिरांक G चे मूल्य 6.67 × 10⁻¹¹ Nm²/kg² आहे. हे विश्वात सर्वत्र सारखेच असते व ते कॅव्हेंडिश यांनी प्रयोगाने मोजले.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पृथ्वीच्या पृष्ठभागावरील गुरुत्वीय त्वरण (g) चे मूल्य किती असते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) 1.6 m/s²</li><li class="opt correct">ब) 9.8 m/s²</li><li class="opt ">क) 3.7 m/s²</li><li class="opt ">ड) 24 m/s²</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) 9.8 m/s²</span></div>
+        <p class="explain">पृथ्वीवर g = 9.8 m/s² असते. चंद्रावर ते 1.6 m/s² म्हणजे पृथ्वीच्या सुमारे 1/6 असते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">चंद्रावरील गुरुत्वीय त्वरण पृथ्वीवरील गुरुत्वीय त्वरणाच्या किती भाग असते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) 1/2</li><li class="opt ">ब) 1/4</li><li class="opt correct">क) 1/6</li><li class="opt ">ड) 1/10</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>क) 1/6</span></div>
+        <p class="explain">चंद्राचे वस्तुमान व त्रिज्या पृथ्वीपेक्षा कमी असल्याने तेथील g पृथ्वीच्या 1/6 असते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">उपग्रहाचा पलायन वेग (vₑ) व कक्षीय वेग (v₀) यांच्यातील संबंध काय?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) vₑ = v₀</li><li class="opt correct">ब) vₑ = √2 v₀</li><li class="opt ">क) vₑ = 2 v₀</li><li class="opt ">ड) vₑ = v₀/√2</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) vₑ = √2 v₀</span></div>
+        <p class="explain">पलायन वेग = √(2GM/R) व कक्षीय वेग = √(GM/R); म्हणून vₑ = √2 × v₀.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">केप्लरच्या तिसऱ्या नियमानुसार ग्रहाच्या परिभ्रमण कालावधी (T) व कक्षेची त्रिज्या (r) यांचा संबंध?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) T ∝ r</li><li class="opt correct">ब) T² ∝ r³</li><li class="opt ">क) T³ ∝ r²</li><li class="opt ">ड) T ∝ r²</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) T² ∝ r³</span></div>
+        <p class="explain">केप्लरच्या तिसऱ्या नियमानुसार T² ∝ r³ (कक्षीय कालावधीचा वर्ग हा कक्षेच्या त्रिज्येच्या घनाच्या समप्रमाणात).</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) न्यूटन – वैश्विक गुरुत्वाकर्षण (२) केप्लर – ग्रहगतीचे नियम (३) कूलॉम – विद्युतबल (४) गॅलिलिओ – गुरुत्वीय स्थिरांक G</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) गॅलिलिओ – गुरुत्वीय स्थिरांक G</span></div>
+        <p class="explain">गुरुत्वीय स्थिरांक G चे मूल्य कॅव्हेंडिश यांनी प्रयोगाने मोजले; गॅलिलिओने गुरुत्वाकर्षणातील प्रारंभिक कार्य केले पण G मोजले नाही.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) कक्षीय वेग – √(GM/R) (२) पलायन वेग – √(2GM/R) (३) गुरुत्वीय त्वरण – GM/R² (४) अभिकेंद्री बल – गुरुत्वाकर्षण बल</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) अभिकेंद्री बल – गुरुत्वाकर्षण बल</span></div>
+        <p class="explain">उपग्रहाला केंद्राभिमुख बल पुरवणारे गुरुत्वाकर्षण बल असते; अभिकेंद्री बल हे जडत्वामुळे निर्माण होणारे आभासी बल आहे, ते गुरुत्वाकर्षण बल नव्हे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">गुरुत्वाकर्षण (Gravitation)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>दोन वस्तूंमधील अंतराच्या वर्गाच्या व्यस्त प्रमाणात व वस्तुमानाच्या गुणाकाराच्या समप्रमाणात कार्य करणाऱ्या आकर्षक बलास वैश्विक गुरुत्वाकर्षण म्हणतात. F = G m₁m₂ / r².</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">केंद्राभिमुख बल (Centripetal force)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>वर्तुळाकार कक्षेत फिरणाऱ्या वस्तूवर केंद्राकडे कार्य करणाऱ्या बलास केंद्राभिमुख बल म्हणतात. उपग्रहासाठी हे बल गुरुत्वाकर्षण बल पुरवते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">कृत्रिम उपग्रह (Artificial satellite)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>पृथ्वीभोवती निश्चित कक्षेत फिरणाऱ्या व मानवनिर्मित यंत्रास कृत्रिम उपग्रह म्हणतात. याचा उपयोग दळणवळण, हवामान अंदाज, निरीक्षण यासाठी होतो.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पृथ्वीवरून वरच्या दिशेने फेकलेली वस्तू परत पृथ्वीवर येते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>पृथ्वी वस्तूवर गुरुत्वाकर्षण बल लावते, ज्यामुळे वस्तूचे वरचे त्वरण कमी होत जाते व शेवटी ती परत पृथ्वीवर येते. फेकण्याचा वेग पलायन वेगापेक्षा कमी असल्यास वस्तू परत येते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">चंद्र पृथ्वीभोवती गोलाकार कक्षेत फिरतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>पृथ्वीचे गुरुत्वाकर्षण बल चंद्राला आवश्यक केंद्राभिमुख बल पुरवते; त्यामुळे चंद्र पृथ्वीभोवती स्थिर कक्षेत फिरतो.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">गुरुत्वाकर्षण बलाचे सूत्र ________ आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>F = G m₁m₂ / r²</span></div><p class="explain">न्यूटनच्या वैश्विक गुरुत्वाकर्षण नियमानुसार दोन वस्तूंमधील आकर्षण बल त्यांच्या वस्तुमानाच्या गुणाकाराच्या समप्रमाणात व अंतराच्या वर्गाच्या व्यस्त प्रमाणात असते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पृथ्वीवरील गुरुत्वीय त्वरणाचे मूल्य सुमारे ________ असते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>9.8 m/s²</span></div><p class="explain">g = GM/R²; पृथ्वीसाठी त्याचे मूल्य 9.8 m/s² येते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">उपग्रहाचा पलायन वेग व कक्षीय वेग यांचे गुणोत्तर ________ असते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>√2</span></div><p class="explain">vₑ = √(2GM/R) व v₀ = √(GM/R) म्हणून vₑ/v₀ = √2.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">न्यूटनचा वैश्विक गुरुत्वाकर्षणाचा सिद्धांत सविस्तर स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>न्यूटनच्या वैश्विक गुरुत्वाकर्षण नियमानुसार विश्वातील प्रत्येक वस्तू इतर प्रत्येक वस्तूला आकर्षित करते. हे आकर्षण बल दोन्ही वस्तूंच्या वस्तुमानाच्या गुणाकाराच्या समप्रमाणात व त्यांच्यामधील अंतराच्या वर्गाच्या व्यस्त प्रमाणात असते: F = G m₁m₂/r². येथे G हा वैश्विक गुरुत्वाकर्षण स्थिरांक (6.67×10⁻¹¹ Nm²/kg²). हा सिद्धांत ग्रह, उपग्रह, चंद्र, सूर्य यांच्या गती स्पष्ट करतो.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">कृत्रिम उपग्रह म्हणजे काय? त्याचे उपयोजन स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>पृथ्वीभोवती निश्चित कक्षेत फिरणाऱ्या मानवनिर्मित यंत्रास कृत्रिम उपग्रह म्हणतात. उपयोजन: (१) दूरसंचार – रेडियो, टीव्ही, फोन संदेश; (२) हवामान अंदाज व वादळांची माहिती; (३) भूपृष्ठाचे निरीक्षण, नकाशे; (४) संरक्षण व नेव्हिगेशन (GPS).</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">कक्षीय वेग व पलायन वेग यांतील फरक स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>कक्षीय वेग (v₀ = √(GM/R)) म्हणजे उपग्रहाला पृथ्वीभोवती वर्तुळाकार कक्षेत फिरण्यासाठी लागणारा किमान वेग. पलायन वेग (vₑ = √(2GM/R)) म्हणजे एखादी वस्तू पृथ्वीच्या गुरुत्वाकर्षणातून पूर्णपणे मुक्त होऊन अवकाशात जाण्यासाठी लागणारा वेग. vₑ = √2 × v₀.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>

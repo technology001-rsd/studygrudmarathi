@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हरित ऊर्जेच्या दिशेने - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण ५</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान २</p>
+            <h1 class="main-heading">हरित ऊर्जेच्या दिशेने</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण ५ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+        <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">खालीलपैकी कोणता ऊर्जा स्रोत नूतनीकरणीय (Renewable) आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) कोळसा</li><li class="opt ">ब) पेट्रोलियम</li><li class="opt correct">क) सौर ऊर्जा</li><li class="opt ">ड) नैसर्गिक वायू</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>क) सौर ऊर्जा</span></div>
+        <p class="explain">सौर, पवन, जल, जैव ऊर्जा हे नूतनीकरणीय स्रोत आहेत; ते संपत नाहीत.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">हरितगृह परिणाम (Greenhouse effect) कोणामुळे होतो?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) ऑक्सिजन</li><li class="opt correct">ब) कार्बन डायऑक्साइड</li><li class="opt ">क) नायट्रोजन</li><li class="opt ">ड) हायड्रोजन</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) कार्बन डायऑक्साइड</span></div>
+        <p class="explain">CO2 व इतर हरितगृह वायू सूर्यकिरणे अडवतात व पृथ्वीचे तापमान वाढवतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">पवन ऊर्जा कशावर आधारित आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) सूर्यप्रकाश</li><li class="opt correct">ब) वाऱ्याची गतिज ऊर्जा</li><li class="opt ">क) भरती-ओहोटी</li><li class="opt ">ड) अणुविखलन</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) वाऱ्याची गतिज ऊर्जा</span></div>
+        <p class="explain">वाऱ्याच्या गतिज ऊर्जेवर चालणाऱ्या टर्बाइनद्वारे पवन ऊर्जा मिळते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">जैव ऊर्जा (Bio-energy) कशापासून मिळते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) खडक</li><li class="opt correct">ब) वनस्पती व प्राण्यांचे कचरा</li><li class="opt ">क) प्लास्टिक</li><li class="opt ">ड) धातू</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) वनस्पती व प्राण्यांचे कचरा</span></div>
+        <p class="explain">शेती व प्राण्यांच्या कचऱ्यापासून बायोगॅस व इथेनॉल तयार करून जैव ऊर्जा मिळते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">अणुऊर्जा कशावर आधारित आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) सूर्यप्रकाश</li><li class="opt ">ब) वारा</li><li class="opt correct">क) अणुविखलन (Fission)</li><li class="opt ">ड) भरती</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>क) अणुविखलन (Fission)</span></div>
+        <p class="explain">युरेनियमसारख्या विखारी मूलद्रव्यांच्या विखलनातून अणुऊर्जा मिळते.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) सौर – सूर्य (२) पवन – वारा (३) जलविद्युत – भरती (४) जैव – कचरा</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) जलविद्युत – भरती</span></div>
+        <p class="explain">जलविद्युत नद्यांच्या प्रवाहावर (धरणे) आधारित असते; भरती-ओहोटीवर अल्टरनेटिव्ह ऊर्जा असते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) कोळसा – अनूतनीकरणीय (२) सौर – नूतनीकरणीय (३) पेट्रोलियम – नूतनीकरणीय (४) पवन – नूतनीकरणीय</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) पेट्रोलियम – नूतनीकरणीय</span></div>
+        <p class="explain">पेट्रोलियम हा अनूतनीकरणीय (संपणारा) स्रोत आहे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">नूतनीकरणीय ऊर्जा स्रोत (Renewable sources)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>सूर्य, वारा, पाणी, जैववस्तू यांपासून मिळणारी ऊर्जा जी निसर्गात पुन्हा निर्माण होते व संपत नाही, तिला नूतनीकरणीय स्रोत म्हणतात. उदा. सौर, पवन, जल, जैव ऊर्जा.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">अनूतनीकरणीय ऊर्जा स्रोत (Non-renewable sources)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>कोळसा, पेट्रोलियम, नैसर्गिक वायू, अणुइंधन हे स्रोत एकदा वापरल्यावर संपतात व पुन्हा निर्माण होण्यास लाखो वर्षे लागतात; म्हणून ते अनूतनीकरणीय आहेत.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">हरितगृह परिणाम (Greenhouse effect)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>वातावरणातील CO2, मिथेन या वायूंमुळे सूर्याची उष्णता पृथ्वीवर अडकते व तापमान वाढते. अतिरिक्त वाढीस ‘जागतिक तापमानवाढ’ म्हणतात.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">हरित ऊर्जेकडे वळणे गरजेचे आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>अनूतनीकरणीय स्रोत संपत आहेत व त्यांच्यामुळे प्रदूषण व तापमानवाढ होते; नूतनीकरणीय स्रोत स्वच्छ व टिकाऊ असल्याने हरित ऊर्जा आवश्यक आहे.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">वनस्पती लावणे हरितगृह परिणाम कमी करते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>वनस्पती प्रकाशसंश्लेषणात CO2 शोषतात; म्हणून वृक्षारोपणाने वातावरणातील कार्बन डायऑक्साइड कमी होतो.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">सूर्यापासून मिळणाऱ्या ऊर्जेस ________ ऊर्जा म्हणतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>सौर (Solar)</span></div><p class="explain">सौर किंवा सौर ऊर्जा सूर्यापासून मिळते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">कोळसा, पेट्रोलियम हे ________ ऊर्जा स्रोत आहेत.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>अनूतनीकरणीय (Non-renewable)</span></div><p class="explain">हे स्रोत एकदा वापरल्यावर संपतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">वातावरणातील ________ वायूमुळे हरितगृह परिणाम होतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>कार्बन डायऑक्साइड (CO₂)</span></div><p class="explain">CO2 सूर्यकिरणे अडवून तापमान वाढवतो.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">नूतनीकरणीय व अनूतनीकरणीय ऊर्जा स्रोतांमधील फरक स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>नूतनीकरणीय स्रोत (सौर, पवन, जल, जैव) निसर्गात पुन्हा निर्माण होतात व संपत नाहीत, ते स्वच्छ असतात. अनूतनीकरणीय स्रोत (कोळसा, पेट्रोलियम, नैसर्गिक वायू) एकदा वापरल्यावर संपतात व लाखो वर्षे निर्माण होतात; त्यांच्यामुळे प्रदूषण होते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">सौर ऊर्जा व पवन ऊर्जा सविस्तर स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>सौर ऊर्जा: सौर पॅनेलद्वारे सूर्यप्रकाशाचे विद्युतात रूपांतर. पवन ऊर्जा: वाऱ्याच्या गतिज ऊर्जेने टर्बाइन फिरवून विद्युतनिर्मिती. दोघेही स्वच्छ, टिकाऊ व ग्रामीण भागात वापरली जातात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">हरितगृह परिणाम व त्यावरील उपाय स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>CO2, मिथेन या वायूंमुळे पृथ्वीचे तापमान वाढते (जागतिक तापमानवाढ), बर्फ वितळतो, समुद्रपातळी वाढते. उपाय: ऊर्जा बचत, नूतनीकरणीय स्रोत वापर, वृक्षारोपण, प्रदूषण नियंत्रण.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">हरित ऊर्जेचे महत्त्व स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-3">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>हरित ऊर्जा पर्यावरणपूरक, स्वच्छ व टिकाऊ आहे. ती देशाला ऊर्जा स्वातंत्र्य देते, प्रदूषण व तापमानवाढ कमी करते व ग्रामीण रोजगार निर्माण करते; म्हणून भविष्यासाठी आवश्यक आहे.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

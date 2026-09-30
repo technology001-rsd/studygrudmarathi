@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>खेळ आणि इतिहास - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण 7</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">इतिहास व राज्यशास्त्र</p>
+            <h1 class="main-heading">खेळ आणि इतिहास</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण 7 • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="map" onclick="filterQA('map', this)">संकल्पनाचित्र</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">आधुनिक ऑलिम्पिक खेळ ........... मध्ये सुरू झाले.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) १८९६, अथेन्स</li><li class="opt ">ब) १९००, पॅरिस</li><li class="opt ">क) १९२८, आमस्टरडॅम</li><li class="opt ">ड) १९४८, लंडन</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) १८९६, अथेन्स</span></div>
+        <p class="explain">बॅरन पियरे दे कुबेर्तेन यांच्या प्रयत्नाने १८९६ मध्ये अथेन्स (ग्रीस) येथे आधुनिक ऑलिम्पिक सुरू झाले.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">मल्लखांब हा ........... चा पारंपरिक खेळ आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) बंगालचा</li><li class="opt correct">ब) महाराष्ट्राचा</li><li class="opt ">क) केरळचा</li><li class="opt ">ड) पंजाबचा</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) महाराष्ट्राचा</span></div>
+        <p class="explain">मल्लखांब (खांबावरील व्यायाम) हा महाराष्ट्रातील प्राचीन पारंपरिक क्रीडा प्रकार आहे.</p></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) ऑलिम्पिक - १८९६  (२) हॉकी - भारताचा राष्ट्रीय खेळ (ऐतिहासिकदृष्ट्या)  (३) कबड्डी - परदेशी खेळ  (४) मल्लखांब - महाराष्ट्र</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) कबड्डी - परदेशी खेळ</span></div>
+        <p class="explain">कबड्डी हा भारतीय मूळचा पारंपरिक खेळ आहे, परदेशी नव्हे. म्हणून ही जोडी चुकीची.</p></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">ऑलिम्पिक खेळ</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="answer-text">प्राचीन ग्रीसमधील ऑलिम्पिया येथील खेळांची परंपरा. १८९६ पासून आधुनिक ऑलिम्पिक सुरू झाले. विविध देशांतील खेळाडू सहभागी होतात; हे आंतरराष्ट्रीय एकात्मतेचे प्रतीक.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">मल्लखांब</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="answer-text">खांबावर किंवा दोरीवर शरीरबळ व समतोल दाखवणारा महाराष्ट्रातील पारंपरिक व्यायाम प्रकार. छत्रपती शिवाजी काळापासून याचा व्यायाम म्हणून उपयोग.</div></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">खेळ हे समाजाच्या इतिहासाचे द्योतक आहेत.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="answer-text">खेळांमधून त्या काळची संस्कृती, शिस्त व समाजमूल्ये दिसतात; ऑलिम्पिक, क्रिकेट स्पर्धा यांतून राष्ट्रीय इतिहासाचे प्रसंग निर्माण होतात.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">क्रिकेटने भारतीय समाजात एकता आणली.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="answer-text">१९८३ व २०११ चे विश्वचषक विजय, सचिन तेंडुलकर यांसारखे खेळाडू यांनी देशाला एकत्र आणले; क्रिकेट हे राष्ट्रीय एकात्मतेचे माध्यम बनले.</div></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="map">
+      <div class="section-title-bar"><span class="section-dot"></span>संकल्पनाचित्र पूर्ण करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="map">
+        <button class="qa-header" onclick="toggleQA('q-map-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">खेळ व इतिहास (संकल्पनाचित्र)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-map-4-0">
+          <div class="qa-inner"><div class="answer-text">ऑलिम्पिक (आंतरराष्ट्रीय) → क्रिकेट (राष्ट्रीय एकात्मता) → हॉकी (भारताचा ऐतिहासिक खेळ) → कबड्डी, खो-खो (पारंपरिक) → मल्लखांब (महाराष्ट्रीय व्यायाम).</div></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">ऑलिम्पिक खेळ व इतिहास यांचा संबंध स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="answer-text">प्राचीन ग्रीसमधील ऑलिम्पिक ही खेळ व संस्कृतीची परंपरा होती. १८९६ मध्ये पुनरुज्जीवित झालेले आधुनिक ऑलिम्पिक जगाच्या इतिहासातील मैत्री व स्पर्धेचे प्रतीक; यातून राष्ट्रांचा इतिहास घडतो.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">क्रिकेटचा इतिहास सांगा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="answer-text">क्रिकेट इंग्लंडमधून आले; ब्रिटिश राजवटीत भारतात रुजले. १९३२ मध्ये भारताने कसोटी खेळायला सुरुवात केली. १९८३ व २०११ विश्वचषक विजयांनी भारतीय क्रिकेटचा इतिहास सुवर्णमय केला.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">भारतीय पारंपरिक खेळांची माहिती द्या.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="answer-text">कबड्डी, खो-खो, मल्लखांब, कुस्ती, कानाबल्ली यांसारखे खेळ भारतीय मूळचे. मल्लखांब व कुस्ती हे महाराष्ट्रात प्रसिद्ध. या खेळांतून शारीरिक व सांस्कृतिक वारसा जतन होतो.</div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">खेळ व राष्ट्रीय एकात्मता यांचा संबंध स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-3">
+          <div class="qa-inner"><div class="answer-text">मोठ्या क्रीडा स्पर्धांत देशाचे प्रतिनिधित्व केले जाते; विजयाने संपूर्ण देशात आनंद व अभिमान निर्माण होतो. खेळाद्वारे भाषा, प्रांत यांच्या पलीकडे जाऊन राष्ट्र एकत्र येते.</div></div>
+        </div>
+      </div></div>
+    </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './historychapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विद्युतधारेचे परिणाम - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण ४</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान १</p>
+            <h1 class="main-heading">विद्युतधारेचे परिणाम</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण ४ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+    <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">विद्युतधारा वाहकातून वाहताना कोणती घटना घडते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) प्रकाश निर्मिती</li><li class="opt correct">ब) उष्णता निर्मिती (तापन)</li><li class="opt ">क) ध्वनी निर्मिती</li><li class="opt ">ड) गुरुत्वाकर्षण</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) उष्णता निर्मिती (तापन)</span></div>
+        <p class="explain">विद्युतधारा वाहकातून वाहताना वाहक गरम होतो; यास जूल तापन (Joule heating) म्हणतात. H = I²Rt.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">विद्युतधारा मोजण्यासाठी कोणते उपकरण वापरतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) व्होल्टमीटर</li><li class="opt correct">ब) अमीटर</li><li class="opt ">क) गॅल्व्हानोमीटर</li><li class="opt ">ड) रोहित्र</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) अमीटर</span></div>
+        <p class="explain">अमीटर (Ammeter) विद्युतधारा मोजतो व तो परिपथात मालासुमार (series) जोडला जातो.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">विद्युतचुंबक कसा तयार होतो?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) स्थिर विद्युतभाराने</li><li class="opt correct">ब) विद्युतधारावाहक गुंडाळीतून</li><li class="opt ">क) उष्णतेने</li><li class="opt ">ड) प्रकाशाने</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) विद्युतधारावाहक गुंडाळीतून</span></div>
+        <p class="explain">जेव्हा विद्युतधारा लोखंडी किंवा मृदुलोह कोराभोवती गुंडाळलेल्या तारेतून वाहते तेव्हा तो विद्युतचुंबक बनतो.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">फ्लेमिंगचा डावा हाताचा नियम कशासाठी वापरतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) विद्युतदाब</li><li class="opt correct">ब) विद्युतचुंबकीय बलाची दिशा</li><li class="opt ">क) वस्तुमान</li><li class="opt ">ड) तापमान</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) विद्युतचुंबकीय बलाची दिशा</span></div>
+        <p class="explain">विद्युतधारावाहकाला चुंबकीय क्षेत्रात असताना कार्य करणाऱ्या बलाची दिशा फ्लेमिंगच्या डाव्या हाताच्या नियमाने सांगतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">व्होल्टमीटर कशासाठी वापरतात?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) धारा मोजणे</li><li class="opt correct">ब) विभवांतर मोजणे</li><li class="opt ">क) रोध मोजणे</li><li class="opt ">ड) वारंवारता</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) विभवांतर मोजणे</span></div>
+        <p class="explain">व्होल्टमीटर (Voltmeter) दोन बिंदूंमधील विभवांतर (व्होल्टता) मोजतो व तो परिपथात समांतर (parallel) जोडला जातो.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) अमीटर – धारा (२) व्होल्टमीटर – विभवांतर (३) रोहित्र – वारंवारता (४) विद्युतचुंबक – विद्युतधारा</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) रोहित्र – वारंवारता</span></div>
+        <p class="explain">रोहित्र (Transformer) विद्युतदाब (व्होल्टता) वाढवण्यासाठी किंवा कमी करण्यासाठी वापरतात; वारंवारता बदलत नाही.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) फ्लेमिंग डावा – बल (२) फ्लेमिंग उजवा – विद्युतदाब (३) लेन्झ – प्रेरण (४) ओहम – विद्युतधारा</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(२) फ्लेमिंग उजवा – विद्युतदाब</span></div>
+        <p class="explain">फ्लेमिंगचा उजवा हाताचा नियम प्रेरित विद्युतधारा (electromagnetic induction) सांगतो; विद्युतदाब नव्हे.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">विद्युतचुंबक (Electromagnet)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>मृदुलोह कोरावरील विद्युतधारावाहक तारगुंडाळीस विद्युतधारा दिल्यास ती चुंबक बनते; धारा बंद केल्यास चुंबकत्व नाहीसे होते, त्यास विद्युतचुंबक म्हणतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">विद्युत तापन (Joule heating)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>विद्युतधारा वाहकातून वाहताना वाहकात उष्णता निर्माण होते; H = I²Rt. याचा उपयोग बल्ब, इस्त्री, केतली यांमध्ये होतो.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">विद्युतचुंबकीय प्रेरण (Electromagnetic induction)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>बदलत्या चुंबकीय क्षेत्रामुळे वाहकात प्रेरित विद्युतधारा निर्माण होण्याच्या घटनेस विद्युतचुंबकीय प्रेरण म्हणतात; हेच जनित्राचे तत्त्व आहे.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">फ्लेमिंगचे नियम</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-3">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>डावा हाताचा नियम विद्युतधारावाहकावरील चुंबकीय बलाची दिशा सांगतो; उजवा हाताचा नियम प्रेरित धारेची दिशा सांगतो.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">विद्युतधारावाहक तार गरम होते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>वाहकातील मुक्त इलेक्ट्रॉन्स वाहकाच्या रेणूंशी टकरतात, त्यामुळे गतिज ऊर्जा उष्णतेत रूपांतरित होऊन तार गरम होते (जूल तापन).</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">विद्युतचुंबकीय प्रेरणामुळे जनित्र कार्य करते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>जनित्रात कुंडल बदलत्या चुंबकीय क्षेत्रात फिरवले जाते, ज्यामुळे प्रेरित विद्युतधारा निर्माण होते; हेच विद्युतचुंबकीय प्रेरणाचे तत्त्व आहे.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">विद्युतधारा मोजण्यासाठी ________ वापरतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>अमीटर</span></div><p class="explain">अमीटर विद्युतधारा मोजतो.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">विद्युतचुंबकाचे बल ________ नियमाने सांगतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>फ्लेमिंग डावा हात</span></div><p class="explain">फ्लेमिंगच्या डाव्या हाताच्या नियमाने विद्युतधारावाहकावरील चुंबकीय बलाची दिशा सांगतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">H = I²Rt हा ________ नियम आहे.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>जूल तापन</span></div><p class="explain">विद्युतधारेमुळे निर्माण होणाऱ्या उष्णतेस जूल तापन नियम म्हणतात.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">विद्युतचुंबक म्हणजे काय? त्याचे उपयोजन स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>मृदुलोह कोरावर गुंडाळलेल्या तारेतून विद्युतधारा वाहताच ती चुंबक बनते, त्यास विद्युतचुंबक म्हणतात. उपयोजन: विद्युतघंटा, मोटर्स, लिफ्ट, MRI यंत्र, कचरा वेगळा करणे, रेल्वे इ.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">फ्लेमिंगचे डावा व उजवा हाताचे नियम स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>डावा हात: तर्जनी=धारा, मध्यमा=चुंबकीय क्षेत्र, अंगठा=बलाची दिशा. उजवा हात: तर्जनी=बदलते चुंबकीय क्षेत्र, अंगठा=प्रेरित धारेची दिशा. डावा बलासाठी, उजवा प्रेरित धारेसाठी.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">विद्युतधारेचे तापन परिणाम व त्याचे उपयोजन स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>विद्युतधारा वाहकातून वाहताना उष्णता निर्माण होते (H = I²Rt). उपयोजन: विद्युत बल्ब, इस्त्री, केतली, हीटर, टोस्टर. याचाच दुष्परिणाम म्हणजे वायरिंगमधील ऊर्जा नुकसान व अपघात.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+        </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+</script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.6 A Brave Heart Dedicated to Science and Humanity - Q&A</title>
+    <style>
+:root {
+    --primary-color: #0052D4;
+    --secondary-color: #38B6FF;
+    --bg-color: #FFFFFF;
+    --text-color: #1D2335;
+    --muted-bg: #F0F4F8;
+    --white-text: #FFFFFF;
+    --correct-bg: #E6F7EE;
+    --correct-border: #2BB673;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+.app-header {
+    background-color: var(--primary-color);
+    padding: 30px 24px 28px;
+    color: var(--white-text);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}
+.header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.back-btn {
+    background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.35); }
+.header-label { font-weight: 600; font-size: 13px; letter-spacing: 0.5px; opacity: 0.9; }
+.app-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+.main-heading { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+.content-body { padding: 24px 20px 48px; max-width: 640px; margin: 0 auto; }
+
+.subtitle-banner {
+    background: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+}
+
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.pill {
+    background: var(--bg-color); color: var(--text-color); border: 1px solid #E2E8F0;
+    padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pill.active { background: var(--primary-color); color: var(--white-text); border-color: var(--primary-color); }
+.pill:hover:not(.active) { background: var(--secondary-color); color: var(--white-text); border-color: var(--secondary-color); }
+
+.qa-card {
+    background: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(29,35,53,0.04); overflow: hidden;
+    border: 1px solid rgba(240,244,248,0.8);
+}
+.qa-header {
+    width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+}
+.qa-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--muted-bg);
+    color: var(--primary-color); font-weight: 700; font-size: 13px; line-height: 28px; text-align: center;
+}
+.qa-q { flex: 1; text-align: left; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--text-color); white-space: pre-wrap; }
+.qa-toggle { flex: 0 0 auto; font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+.qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+.qa-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.qa-inner { padding: 0 18px 18px; text-align: left; }
+.ans-label { font-size: 13px; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.ans-label span { color: var(--correct-border); }
+.answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; white-space: pre-wrap; }
+
+.type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; margin-bottom: 8px;
+}
+.type-badge.objective { background: #DBEAFE; color: #1E40AF; }
+.type-badge.subjective { background: #FEF3C7; color: #92400E; }
+.type-badge.activity { background: #D1FAE5; color: #065F46; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">Unit 4 • Workshop</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">English (LL) • Std X</p>
+            <h1 class="main-heading">4.6 A Brave Heart Dedicated to Science and Humanity</h1>
+            <small>— (Marie Curie)</small>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">
+            📚 Workshop Questions & Answers — Click any question to reveal the answer
+        </div>
+
+        <div class="filter-bar">
+            <button class="pill active" onclick="filterQA('all', this)">All</button>
+            <button class="pill" onclick="filterQA('objective', this)">Objective</button>
+            <button class="pill" onclick="filterQA('subjective', this)">Subjective</button>
+            <button class="pill" onclick="filterQA('activity', this)">Activity</button>
+        </div>
+
+        <div id="qaContainer">
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">Write in one sentence each, why the following years were landmarks in the lives of Pierre and Marie Curie: 1895, 1902, 1903, 1906, 1911</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-0">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">1895 — Marie married Pierre Curie in July 1895, and they began working together in a shabby laboratory.
+1902 — The Curies discovered radium, seeing a soft bluish-purple light in their laboratory on a September night.
+1903 — The Curies, along with Henry Becquerel, were awarded the Nobel Prize for Physics for the discovery of Radium and Polonium.
+1906 — Pierre Curie was knocked down and killed by a horse-drawn wagon, leaving Marie heartbroken.
+1911 — Marie Curie was awarded the Nobel Prize for Chemistry (her second Nobel Prize) for her work on radium.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">Complete the web diagram with the qualities of Madame Curie.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-1">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Qualities of Madame Curie:
+• Determination
+• Courage
+• Dedication
+• Perseverance
+• Selflessness
+• Hardworking
+• Indomitable spirit
+• Commitment to science
+• Love for humanity
+• Patience
+• Willpower
+• Sacrifice</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">Name the following: (a) Two discoverers of new lands (b) Two conquerors of the peak of Mt. Everest (c) Original name of Madame Curie (d) Her place of birth (e) Subjects Marie majored in at the University of Paris (f) Nationality of her husband Pierre (g) Scientist who discovered the properties of uranium (h) Two radio-active elements discovered by Curies</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-2">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Columbus and Vasco da Gama
+(b) Hillary and Tenzing
+(c) Maria Sklodowska
+(d) Warsaw, Poland
+(e) Physics and Mathematics
+(f) French
+(g) Henri Becquerel (in 1896)
+(h) Polonium and Radium</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">Match the incidents in Madame Curie's life with the years. (1) Henri Becquerel discovered that uranium had radio-active property. (2) Maria Sklodowska was born in Warsaw, Poland. (3) Marie was awarded Nobel Prize. (4) Curie couple discovered radium. (5) Marie passed away.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-3">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(1) Henri Becquerel discovered → 1896
+(2) Maria Sklodowska was born → 1867
+(3) Marie was awarded Nobel Prize → 1911 (second Nobel Prize; also first in 1903)
+(4) Curie couple discovered radium → 1902
+(5) Marie passed away → 1934</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">Think and answer in your own words: (a) What common characteristics did Marie and Pierre share as students? (b) Which of the two scientists was greater than the other? Say why. (c) Why was the gift of a ton of pitchblende a great stroke of luck? (d) Besides the uses mentioned, how is radium used in medicine? (e) What proves that Marie Curie was a true lover of humanity and not wealth?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-4">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Both were brilliant but poor. Both were dedicated to science. Marie topped her class with Honours in Physics and Mathematics despite poverty and hunger. Pierre was also a brilliant scientist who shared Marie's passion for research.
+
+(b) Both were equally great in their own ways. Pierre supported Marie's work and shared the Nobel Prize with her. However, Marie's courage to continue alone after Pierre's death and win a second Nobel Prize shows her exceptional strength. She is arguably greater because she overcame extreme poverty, gender discrimination and personal loss.
+
+(c) Pitchblende was extremely expensive and the Curies were very poor. The gift of one ton from the Emperor of Austria was the most precious gift they had ever received. It allowed them to continue their research without worrying about the cost of raw material.
+
+(d) Besides treating cancer, radium is used in radiotherapy for various tumours, in sterilizing medical equipment, in radiography to detect fractures, and in nuclear medicine for diagnostic imaging.
+
+(e) The Curies could have patented their discovery of radium and become extremely rich. But Marie refused to do so and gave it freely to the world, saying "Radium belongs to the people, not to me." She remained comparatively poor throughout her life.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-5')" aria-expanded="false">
+          <span class="qa-num">6</span>
+          <span class="qa-q">Find words/phrases from the text that are synonyms of the word 'brave'.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-5">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Synonyms of 'brave' from the text:
+• Courage
+• Indomitable spirit
+• Daring
+• Determined
+• Bold</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-6')" aria-expanded="false">
+          <span class="qa-num">7</span>
+          <span class="qa-q">Find proverbs/thoughts/quotes related to: (a) Courage (b) Strength of character (c) Determination (d) Hard work</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-6">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Courage:
+• "Courage is not the absence of fear, but the triumph over it." — Nelson Mandela
+• "Cowards die many times before their deaths; the valiant never taste of death but once." — Shakespeare
+• "Fortune favours the brave."
+
+(b) Strength of character:
+• "Character is doing the right thing when nobody is watching."
+• "The purest treasure mortal times afford is a spotless reputation." — Shakespeare
+• "Strength of character isn't about how much you can handle before you break, it's about how much you can handle after you break."
+
+(c) Determination:
+• "Where there is a will, there is a way."
+• "The difference between the impossible and the possible lies in a person's determination."
+• "If you fall, get up and try again."
+
+(d) Hard work:
+• "There is no substitute for hard work." — Thomas Edison
+• "The harder you work, the luckier you get."
+• "Hard work beats talent when talent doesn't work hard."</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="objective">
+        <button class="qa-header" onclick="toggleQA('ans-7')" aria-expanded="false">
+          <span class="qa-num">8</span>
+          <span class="qa-q">Match the branches of Science with what they study.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-7">
+          <div class="qa-inner">
+            <span class="type-badge objective">objective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">(a) Ecology → (iv) Study of living organisms and environment
+(b) Geology → (vii) Study of solid earth and rocks
+(c) Meteorology → (i) Study of Atmosphere
+(d) Anatomy → (vi) Study of structure and functions of the body
+(e) Botany → (ii) Study of Plant-life
+(f) Psychology → (v) Study of human mind and emotions
+(g) Cosmology → (iii) Study of the Universe</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-8')" aria-expanded="false">
+          <span class="qa-num">9</span>
+          <span class="qa-q">Write a letter to the Headmaster suggesting Scientific equipment needed for Standard X practicals.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-8">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Sanjay Sharma
+In-charge of Science Committee,
+[School Name], [City]
+1 January, 2025
+
+To,
+The Headmaster,
+[School Name], [City]
+
+Subject: Requirement of Scientific Equipment for Standard X Science Practicals
+
+Sir/Madam,
+
+I am writing to bring to your kind attention the need for essential scientific equipment required for Standard X Science practicals as per the SSC syllabus.
+
+Our current laboratory lacks some basic apparatus needed to conduct experiments effectively. The following items are urgently required:
+
+1. Convex and concave lenses (10 sets)
+2. Chemical reagents (Acids, Bases, Salts)
+3. Test tubes, beakers and measuring cylinders (20 each)
+4. Thermometers (10)
+5. Ammeters and voltmeters (5 each)
+6. Charts of periodic table, human anatomy, plant classification
+
+These equipments are essential for students to perform practicals and prepare for their board exams. Having proper apparatus will greatly enhance their understanding of scientific concepts.
+
+I kindly request you to sanction the necessary funds for purchasing these items at the earliest.
+
+Thank you,
+Yours obediently,
+Sanjay Sharma</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="subjective">
+        <button class="qa-header" onclick="toggleQA('ans-9')" aria-expanded="false">
+          <span class="qa-num">10</span>
+          <span class="qa-q">'There is no shortcut to success. ' Expand this maxim with introduction, body and conclusion.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-9">
+          <div class="qa-inner">
+            <span class="type-badge subjective">subjective</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Introduction: The maxim "There is no shortcut to success" means that lasting success can only be achieved through hard work, dedication and perseverance. There are no easy paths or magic formulas.
+
+Body: History proves this. Marie Curie worked tirelessly for years in a shabby shed, boiling pitchblende in extreme conditions before discovering radium. She faced poverty, hunger and health issues but never gave up. Similarly, great scientists, athletes and leaders achieved success through continuous effort. Mary Kom trained hard for years, balancing family and sport, before becoming a world champion. Students who top exams do so through regular study, not last-minute cramming.
+
+Shortcuts may give temporary gains but never lasting success. Those who try to cheat or take easy routes eventually fail. Real success requires patience, sacrifice and the willingness to work when others are resting.
+
+Conclusion: There is truly no elevator to success — you have to take the stairs, one step at a time. As Thomas Edison said, "There is no substitute for hard work."</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-10')" aria-expanded="false">
+          <span class="qa-num">11</span>
+          <span class="qa-q">Project: Find five famous scientists who have given great inventions, and write about them.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-10">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">Five Great Scientists and Their Inventions:
+
+1. Marie Curie (1867–1934): Discovered radium and polonium; pioneered research on radioactivity; won two Nobel Prizes.
+
+2. Albert Einstein (1879–1955): Developed the Theory of Relativity (E=mc²); made breakthrough contributions to quantum mechanics.
+
+3. Isaac Newton (1643–1727): Discovered laws of motion and universal gravitation; invented calculus.
+
+4. Thomas Edison (1847–1931): Invented the electric light bulb, phonograph, and motion picture camera; held over 1000 patents.
+
+5. C.V. Raman (1888–1970): Discovered the Raman Effect (scattering of light); won Nobel Prize in Physics (1930); founded the Raman Research Institute.
+
+Each of these scientists worked with dedication, faced challenges, and contributed immensely to human progress.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="activity">
+        <button class="qa-header" onclick="toggleQA('ans-11')" aria-expanded="false">
+          <span class="qa-num">12</span>
+          <span class="qa-q">Language Study: 1. Pick out Prefixes and Suffixes from words. 2. Say whether Predicates contain Objects/Complements/Adverbials. 3. Pick out Conjunctions.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="ans-11">
+          <div class="qa-inner">
+            <span class="type-badge activity">activity</span>
+            <div class="ans-label">✅ Answer:</div>
+            <div class="answer-text">1. Prefixes and Suffixes:
+• unattainable: Prefix: un-; Suffix: -able; Root: attain
+• indomitable: Prefix: in-; Suffix: -able; Root: domit
+• disheartening: Prefix: dis-; Suffix: -ing; Root: heart
+• incalculable: Prefix: in-; Suffix: -able; Root: calcul(ate)
+• disconsolate: Prefix: dis-; Suffix: -ate; Root: console
+• ensuring: Prefix: en-; Suffix: -ing; Root: sure
+
+2. Predicates:
+(a) Madame Curie discovered radium. — Object (radium)
+(b) Pierre was knocked down. — Complement
+(c) Pitchblende was expensive. — Complement
+(d) The couple took a flat. — Object (a flat)
+(e) They moved cautiously. — Adverbial (cautiously)
+   Success came finally. — Adverbial (finally)
+
+3. Conjunctions:
+(a) "There are women who show extreme courage." — who (subordinator)
+(b) "Pitchblende was expensive, so they could not afford." — so (co-ordinator)
+(c) "After her daily household work, Marie settled down." — after (subordinator)
+(d) "Marie wanted to study but her father could not afford." — but (co-ordinator)
+(e) "History is full of chapters that tell of extraordinary people." — that (subordinator)</div>
+          </div>
+        </div>
+      </div></div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = '../englishhome.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.qa-card').forEach(function(card){
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

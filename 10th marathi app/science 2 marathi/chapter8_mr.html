@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पेशीविज्ञान व जैवतंत्रज्ञान - स्वाध्याय</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --correct-bg: #E6F7EE;
+            --correct-border: #2BB673;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Nirmala UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 30px 24px;
+            color: var(--white-text);
+            position: relative;
+            border-bottom-left-radius: 32px;
+            border-bottom-right-radius: 32px;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .back-btn {
+            background-color: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 42px; height: 42px; border-radius: 50%; font-size: 20px; font-weight: 700;
+            cursor: pointer; line-height: 42px;
+        }
+        .header-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; }
+        .main-heading { font-size: 24px; font-weight: 700; line-height: 1.3; }
+
+        .content-body { padding: 28px 24px 48px 24px; max-width: 640px; margin: 0 auto; }
+
+        .subtitle-banner {
+            background-color: var(--bg-color); border-radius: 16px; padding: 14px 18px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); font-size: 13px; color: #7E8B9B; font-weight: 600;
+        }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .pill {
+            background-color: var(--muted-bg); color: var(--text-color); border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pill.active { background-color: var(--primary-color); color: var(--white-text); }
+        .pill:hover { background-color: var(--secondary-color); color: var(--white-text); }
+
+        .section-block { margin-bottom: 26px; }
+        .section-title-bar {
+            display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px;
+        }
+        .section-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--secondary-color); }
+
+        .qa-card {
+            background-color: var(--bg-color); border-radius: 16px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(29,35,53,0.04); overflow: hidden; border: 1px solid rgba(240,244,248,0.9);
+        }
+        .qa-header {
+            width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+            background: none; border: none; padding: 16px 18px; cursor: pointer; font-family: inherit;
+        }
+        .qa-num {
+            flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background-color: var(--muted-bg);
+            color: var(--primary-color); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center;
+        }
+        .qa-q { flex: 1; text-align: left; font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--text-color); }
+        .qa-toggle { flex: 0 0 auto; font-size: 22px; font-weight: 700; color: var(--primary-color); line-height: 1; transition: transform 0.25s ease; }
+        .qa-card.open .qa-toggle { transform: rotate(45deg); }
+
+        .qa-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .qa-inner { padding: 0 18px 18px 18px; text-align: left; }
+        .options { list-style: none; margin: 6px 0 12px 0; }
+        .options .opt { padding: 8px 12px; border-radius: 10px; background-color: var(--muted-bg); margin-bottom: 6px; font-size: 14px; }
+        .options .opt.correct { background-color: var(--correct-bg); border: 1px solid var(--correct-border); font-weight: 600; }
+        .ans-label { font-size: 14px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+        .ans-label span { color: var(--correct-border); }
+        .explain { font-size: 14px; line-height: 1.7; color: #4A5568; }
+        .answer-text { font-size: 14px; line-height: 1.8; color: #2D3748; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <span class="header-label">प्रकरण ८</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">विज्ञान व तंत्रज्ञान २</p>
+            <h1 class="main-heading">पेशीविज्ञान व जैवतंत्रज्ञान</h1>
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="subtitle-banner">प्रकरण ८ • स्वाध्याय (प्रश्न व उत्तरे)</div>
+
+        <div class="filter-bar"><button class="pill active" data-filter="all" onclick="filterQA('all', this)">सर्व</button><button class="pill " data-filter="mcq" onclick="filterQA('mcq', this)">बहुपर्यायी</button><button class="pill " data-filter="pair" onclick="filterQA('pair', this)">चुकीची जोडी</button><button class="pill " data-filter="note" onclick="filterQA('note', this)">टीप</button><button class="pill " data-filter="reason" onclick="filterQA('reason', this)">सकारण</button><button class="pill " data-filter="fill" onclick="filterQA('fill', this)">रिकाम्या जागा</button><button class="pill " data-filter="long" onclick="filterQA('long', this)">सविस्तर</button></div>
+
+        <div id="sectionsContainer">
+        <div class="section-block" data-type="mcq">
+      <div class="section-title-bar"><span class="section-dot"></span>बहुपर्यायी प्रश्न</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पेशीचे ‘ऊर्जागृह’ (Powerhouse) म्हणून कोणाला ओळखले जाते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-0">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) केंद्रक</li><li class="opt ">ब) रायबोसोम</li><li class="opt correct">क) मायटोकॉन्ड्रिया</li><li class="opt ">ड) लायसोसोम</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>क) मायटोकॉन्ड्रिया</span></div>
+        <p class="explain">मायटोकॉन्ड्रियामध्ये श्वसनातून ATP ऊर्जा निर्माण होते; म्हणून त्यास ऊर्जागृह म्हणतात.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुनर्संयोजित DNA (rDNA) तंत्रज्ञान कोणत्या क्षेत्रातील आहे?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-1">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) जैवतंत्रज्ञान</li><li class="opt ">ब) संगणकशास्त्र</li><li class="opt ">क) अंतराळशास्त्र</li><li class="opt ">ड) भूशास्त्र</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) जैवतंत्रज्ञान</span></div>
+        <p class="explain">जनुक अभियांत्रिकीद्वारे rDNA तयार करणे हे जैवतंत्रज्ञानाचे उपयोजन आहे.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">इन्सुलिनचे उत्पादन कोणत्या तंत्रज्ञानाने केले जाते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-2">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt correct">अ) जनुक अभियांत्रिकी</li><li class="opt ">ब) यांत्रिकी</li><li class="opt ">क) रसायनशास्त्र</li><li class="opt ">ड) भौतिकशास्त्र</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>अ) जनुक अभियांत्रिकी</span></div>
+        <p class="explain">जनुक अभियांत्रिकीद्वारे (rDNA) जीवाणू/यीस्टमधून मानवी इन्सुलिन तयार केले जाते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-3')" aria-expanded="false">
+          <span class="qa-num">4</span>
+          <span class="qa-q">पेशीचे नियंत्रण केंद्र कोणते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-3">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) पेशीपटल</li><li class="opt correct">ब) केंद्रक (Nucleus)</li><li class="opt ">क) रायबोसोम</li><li class="opt ">ड) गॉल्जी शरीर</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) केंद्रक (Nucleus)</span></div>
+        <p class="explain">केंद्रकामध्ये DNA असते व ते पेशीच्या सर्व क्रियांचे नियंत्रण करते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="mcq">
+        <button class="qa-header" onclick="toggleQA('q-mcq-0-4')" aria-expanded="false">
+          <span class="qa-num">5</span>
+          <span class="qa-q">प्रथिने संश्लेषण कोठे होते?</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-mcq-0-4">
+          <div class="qa-inner">
+        <ul class="options"><li class="opt ">अ) मायटोकॉन्ड्रिया</li><li class="opt correct">ब) रायबोसोम</li><li class="opt ">क) केंद्रक</li><li class="opt ">ड) लायसोसोम</li></ul>
+        <div class="ans-label">✅ उत्तर: <span>ब) रायबोसोम</span></div>
+        <p class="explain">रायबोसोमवर m-RNA च्या सूचनेनुसार प्रथिनांची निर्मिती होते.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="pair">
+      <div class="section-title-bar"><span class="section-dot"></span>चुकीची जोडी ओळखा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) मायटोकॉन्ड्रिया – ऊर्जा (२) रायबोसोम – प्रथिने (३) लायसोसोम – पचन एंजाइम (४) केंद्रक – ऊर्जा</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-0">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(४) केंद्रक – ऊर्जा</span></div>
+        <p class="explain">केंद्रक हे नियंत्रण केंद्र आहे; ऊर्जा मायटोकॉन्ड्रियात निर्माण होते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="pair">
+        <button class="qa-header" onclick="toggleQA('q-pair-1-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">पुढीलपैकी चुकीची जोडी कोणती? (१) rDNA – जनुक अभियांत्रिकी (२) इन्सुलिन – मधुमेह (३) जैवखते – रासायनिक खते (४) पेटंट – बौद्धिक संपदा</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-pair-1-1">
+          <div class="qa-inner">
+        <div class="ans-label">✅ चुकीची जोडी: <span>(३) जैवखते – रासायनिक खते</span></div>
+        <p class="explain">जैवखते ही सूक्ष्मजीवांवर आधारित नैसर्गिक खते आहेत; रासायनिक खते वेगळी आहेत.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="note">
+      <div class="section-title-bar"><span class="section-dot"></span>टीप लिहा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पेशी (Cell)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>सजीवांची मूलभूत रचना व कार्यात्मक एकक. पेशीपटल, केंद्रक व पेशीद्रव्य यांचा समावेश. वनस्पती पेशीत पेशीभित्ती व हरितलवक असतात. ऊती, अवयव व सजीव पेशींपासूनच तयार होतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">जनुक अभियांत्रिकी (Genetic Engineering)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>एका जीवाचे जनुक दुसऱ्या जीवात प्रविष्ट करून पुनर्संयोजित DNA (rDNA) तयार करण्याची पद्धत. यामुळे इन्सुलिन, इंटरफेरॉन, जैवखते तयार होतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="note">
+        <button class="qa-header" onclick="toggleQA('q-note-2-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">जैवतंत्रज्ञान (Biotechnology)</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-note-2-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>जीवांच्या किंवा त्यांच्या घटकांचा वापर करून उपयुक्त उत्पादने व सेवा निर्माण करणारे तंत्रज्ञान. औषधनिर्मिती, कृषी, पर्यावरण शुद्धीकरण यांत उपयोग.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="reason">
+      <div class="section-title-bar"><span class="section-dot"></span>विधाने सकारण स्पष्ट करा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">मायटोकॉन्ड्रियाला ऊर्जागृह म्हणतात.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-0">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>त्यामध्ये श्वसन प्रक्रियेद्वारे अन्नाचे ऑक्सिडीकरण होऊन ATP ऊर्जा निर्माण होते; म्हणून त्यास पेशीचे ऊर्जागृह म्हणतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="reason">
+        <button class="qa-header" onclick="toggleQA('q-reason-3-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">जैवतंत्रज्ञानाचा कृषी क्षेत्रात उपयोग होतो.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-reason-3-1">
+          <div class="qa-inner"><div class="ans-label">✅ स्पष्टीकरण: <span>जैवखते, जैविक कीटकनाशक व सुधारित बियाणी यांमुळे उत्पादन वाढते व रासायनिक प्रदूषण कमी होते; म्हणून कृषीसाठी उपयुक्त.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="fill">
+      <div class="section-title-bar"><span class="section-dot"></span>रिकाम्या जागा भरा</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पेशीचे नियंत्रण केंद्र ________ म्हणून ओळखले जाते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>केंद्रक (Nucleus)</span></div><p class="explain">केंद्रकात DNA असते व नियंत्रण करते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">मानवी इन्सुलिन ________ तंत्रज्ञानाने तयार केले जाते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>जनुक अभियांत्रिकी (rDNA)</span></div><p class="explain">rDNA तंत्रज्ञानाद्वारे इन्सुलिन मिळते.</p></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="fill">
+        <button class="qa-header" onclick="toggleQA('q-fill-4-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">पेशीतील प्रथिने संश्लेषण ________ वर होते.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-fill-4-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>रायबोसोम</span></div><p class="explain">रायबोसोम हे प्रथिने निर्मितीचे केंद्र.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="section-block" data-type="long">
+      <div class="section-title-bar"><span class="section-dot"></span>सविस्तर उत्तरे</div>
+      <div class="section-qs">
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-0')" aria-expanded="false">
+          <span class="qa-num">1</span>
+          <span class="qa-q">पेशीची रचना व कार्य सविस्तर स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-0">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>पेशीमध्ये पेशीपटल (रक्षण व देवाणघेवाण), केंद्रक (DNA, नियंत्रण), पेशीद्रव्य, मायटोकॉन्ड्रिया (ऊर्जा), रायबोसोम (प्रथिने), गॉल्जी शरीर, लायसोसोम (पचन) असतात. वनस्पती पेशीत पेशीभित्ती व हरितलवक असतात. सर्व ऊती व अवयव पेशींपासून बनतात.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-1')" aria-expanded="false">
+          <span class="qa-num">2</span>
+          <span class="qa-q">जनुक अभियांत्रिकी व पुनर्संयोजित DNA स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-1">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>इच्छित जनुक काढून ते वाहक (plasmid) मध्ये बसवून पुनर्संयोजित DNA (rDNA) तयार केले जाते व ते जीवाणू/यीस्टमध्ये प्रविष्ट करतात. त्यातून इन्सुलिन, इंटरफेरॉन, वाढ संप्रेरक यांसारखी उत्पादने मिळतात. ही जनुक अभियांत्रिकी म्हणून ओळखली जाते.</span></div></div>
+        </div>
+      </div>
+      <div class="qa-card" data-type="long">
+        <button class="qa-header" onclick="toggleQA('q-long-5-2')" aria-expanded="false">
+          <span class="qa-num">3</span>
+          <span class="qa-q">जैवतंत्रज्ञानाची उपयोजने स्पष्ट करा.</span>
+          <span class="qa-toggle">+</span>
+        </button>
+        <div class="qa-body" id="q-long-5-2">
+          <div class="qa-inner"><div class="ans-label">✅ उत्तर: <span>औषधनिर्मिती (इन्सुलिन, लसी, ॲन्टिबायोटिक्स), कृषी (जैवखते, BT कापूस, रोगप्रतिकारक बियाणे), पर्यावरण (सांडपाणी शुद्धीकरण, जैविक कीटकनाशक), अन्न प्रक्रिया (यीस्ट, एन्झाइम्स). यामुळे आरोग्य व अर्थव्यवस्था सुधारते.</span></div></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    </main>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) { window.history.back(); }
+            else { window.location.href = './sciencechapters_mr.html'; }
+        }
+        function toggleQA(id) {
+            var body = document.getElementById(id);
+            var card = body.parentElement;
+            if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+                body.style.maxHeight = '0px';
+                card.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                card.classList.add('open');
+            }
+        }
+        function filterQA(type, el) {
+            document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
+            el.classList.add('active');
+            document.querySelectorAll('.section-block').forEach(function(sec){
+                if (type === 'all' || sec.getAttribute('data-type') === type) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+        window.onload = function(){
+            document.querySelectorAll('.qa-body').forEach(function(b){ b.style.maxHeight = '0px'; });
+        };
+    </script>
+</body>
+</html>

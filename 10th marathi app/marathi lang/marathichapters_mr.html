@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मराठी (LL) • दहावी — धडे</title>
+    <style>
+        :root {
+            --primary-color: #0052D4;
+            --secondary-color: #38B6FF;
+            --bg-color: #FFFFFF;
+            --text-color: #1D2335;
+            --muted-bg: #F0F4F8;
+            --white-text: #FFFFFF;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --radius-sm: 12px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 2px 8px rgba(29,35,53,0.04);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Devanagari', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--muted-bg); color: var(--text-color); min-height: 100vh; }
+
+        .app-header {
+            background-color: var(--primary-color);
+            padding: 28px 24px 64px;
+            color: var(--white-text);
+            border-bottom-left-radius: var(--radius-lg);
+            border-bottom-right-radius: var(--radius-lg);
+            position: relative;
+        }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .back-btn {
+            background: rgba(255,255,255,0.2); color: var(--white-text); border: none;
+            width: 40px; height: 40px; border-radius: 50%; font-size: 18px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.35); }
+        .header-brand { font-weight: 800; font-size: 18px; letter-spacing: 0.3px; }
+        .header-content { margin-top: 8px; }
+        .app-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary-color); font-weight: 700; margin-bottom: 6px; }
+        .main-heading { font-size: 26px; font-weight: 700; line-height: 1.3; }
+        .main-heading small { font-size: 14px; font-weight: 400; opacity: 0.85; display: block; margin-top: 4px; }
+
+        .search-container {
+            position: absolute;
+            bottom: -24px;
+            left: 24px;
+            right: 24px;
+        }
+        .search-input {
+            width: 100%;
+            background: var(--bg-color);
+            border: 2px solid var(--muted-bg);
+            padding: 14px 20px;
+            border-radius: var(--radius);
+            font-size: 15px;
+            color: var(--text-color);
+            box-shadow: 0 6px 16px rgba(0,82,212,0.15);
+            outline: none;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+
+        .content-body { padding: 48px 20px 32px; max-width: 640px; margin: 0 auto; }
+
+        .section-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .section-title { font-size: 18px; font-weight: 700; color: var(--text-color); }
+        .pill-tag {
+            background: var(--primary-color); color: var(--white-text);
+            padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+        }
+
+        .unit-block { margin-bottom: 28px; }
+        .unit-header { 
+            font-size: 15px; font-weight: 700; color: var(--primary-color); 
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .unit-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--secondary-color); }
+        .chapters-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .chapter-card {
+            background: var(--bg-color); border-radius: var(--radius);
+            padding: 14px 16px; cursor: pointer; transition: all 0.2s ease;
+            border: 1px solid rgba(240,244,248,0.8);
+        }
+        .chapter-card:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(29,35,53,0.06);
+            border-color: var(--secondary-color);
+        }
+        .card-layout { display: flex; align-items: center; gap: 14px; }
+        .card-num {
+            width: 40px; height: 40px; flex-shrink: 0;
+            background: var(--muted-bg); color: var(--primary-color);
+            border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+        }
+        .chapter-card:hover .card-num { background: var(--primary-color); color: var(--white-text); }
+        .card-text { flex: 1; }
+        .chapter-title { font-size: 14px; font-weight: 700; color: var(--text-color); line-height: 1.4; }
+        .chapter-author { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        .card-arrow { color: var(--secondary-color); font-size: 16px; font-weight: 700; }
+        .hidden { display: none !important; }
+
+        @media (max-width: 420px) {
+            .app-header { padding: 20px 16px 56px; }
+            .content-body { padding: 40px 14px 24px; }
+            .main-heading { font-size: 22px; }
+            .search-container { left: 16px; right: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-nav">
+            <button class="back-btn" onclick="goHome()">←</button>
+            <span class="header-brand">मराठी (LL)</span>
+        </div>
+        <div class="header-content">
+            <p class="app-title">दहावी • महाराष्ट्र बोर्ड</p>
+            <h1 class="main-heading">मराठी धडे<br><small>कृती आणि उत्तरे</small></h1>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchBox" placeholder="धडे शोधा..." onkeyup="searchChapters()">
+        </div>
+    </header>
+
+    <main class="content-body">
+        <div class="section-bar">
+            <div class="section-title">सर्व धडे</div>
+            <div class="pill-tag" id="countTag">?? धडे</div>
+        </div>
+        <div id="chaptersContainer"></div>
+    </main>
+
+    <script>
+        const chaptersData = [
+            { lesson: "१", title: "जय जय हे भारत देशा", author: "नारायण सुर्वे", file: "1._jai_jai_he_bharat_desha.html" },
+            { lesson: "२", title: "बोलतो मराठी", author: "विठ्ठल वाघ", file: "2._bolato_marathi.html" },
+            { lesson: "३", title: "आजी — कुटुंबाचा आगळा", author: "—", file: "3._aaji___kutumbachan_aagal.html" },
+            { lesson: "४", title: "उत्तमलक्षण", author: "—", file: "4._uttamalaxan.html" },
+            { lesson: "५", title: "वसंतहृदय चैत्र", author: "—", file: "5._vasantahruday_chaitra.html" },
+            { lesson: "६", title: "वस्तू", author: "—", file: "6._vastu.html" },
+            { lesson: "७", title: "गावतचे पाटे", author: "—", file: "7._gavatache_pate.html" },
+            { lesson: "८", title: "वाट पाहताना", author: "—", file: "8._wat_pahatana.html" },
+            { lesson: "९", title: "आश्वासक चित्र", author: "—", file: "9._aashwasak_chitra.html" },
+            { lesson: "१०", title: "आपण्णाचे पत्र", author: "—", file: "10._aappanche_patra.html" },
+            { lesson: "११", title: "गोष्ट अरुणिमाची", author: "—", file: "11._goshta_arunimachi.html" },
+            { lesson: "१२", title: "भारतवाक्य", author: "—", file: "12._bharatvakya.html" },
+            { lesson: "१३", title: "कार्टे सुधारक कर्वे", author: "—", file: "13._karte_sudharak_karve.html" },
+            { lesson: "१४", title: "काळे केस", author: "—", file: "14._kale_kes.html" },
+            { lesson: "१५", title: "खोड आणखी थोडेशे", author: "—", file: "15._khod_aanakhi_thodese.html" },
+            { lesson: "१६", title: "आकाशी झेप घे रे", author: "—", file: "16._aakashi_zep_ghe_re.html" },
+            { lesson: "१७", title: "सोनाली", author: "—", file: "17._sonali.html" },
+            { lesson: "१८", title: "निर्णय", author: "—", file: "18._nirnay.html" },
+            { lesson: "१९", title: "तू झालास मूक समाजाचा नायक", author: "—", file: "19._tu_zalas_mook_samajacha_nayak.html" },
+            { lesson: "२०", title: "सर्व विश्वची व्हावे सुखी", author: "—", file: "20._sarva_vishwachi_vhave_sukhi.html" },
+        ];
+
+        let currentUnit = '';
+        function renderChapters(data) {
+            const container = document.getElementById('chaptersContainer');
+            container.innerHTML = '';
+            let count = 0;
+
+            data.forEach(ch => {
+                const unitBlock = document.createElement('div');
+                unitBlock.className = 'unit-block';
+                unitBlock.innerHTML = '<div class="chapters-list"></div>';
+                container.appendChild(unitBlock);
+                
+                count++;
+                const list = unitBlock.querySelector('.chapters-list');
+                const card = document.createElement('div');
+                card.className = 'chapter-card';
+                card.onclick = function() { window.location.href = ch.file; };
+                card.innerHTML = 
+                    '<div class="card-layout">' +
+                        '<div class="card-num">' + ch.lesson + '</div>' +
+                        '<div class="card-text">' +
+                            '<div class="chapter-title">' + ch.title + '</div>' +
+                            (ch.author !== '—' ? '<div class="chapter-author">' + ch.author + '</div>' : '') +
+                        '</div>' +
+                        '<div class="card-arrow">→</div>' +
+                    '</div>';
+                list.appendChild(card);
+            });
+
+            document.getElementById('countTag').innerText = count + ' धडे';
+        }
+
+        function searchChapters() {
+            const query = document.getElementById('searchBox').value.toLowerCase();
+            const filtered = chaptersData.filter(ch => 
+                ch.title.toLowerCase().includes(query) || 
+                ch.lesson.includes(query) ||
+                ch.author.toLowerCase().includes(query)
+            );
+            renderChapters(filtered);
+        }
+
+        function goHome() {
+            window.location.href = '../homepagemarathi/marathihome.html';
+        }
+
+        window.onload = function() { renderChapters(chaptersData); };
+    </script>
+</body>
+</html>
